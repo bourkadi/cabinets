@@ -34,7 +34,7 @@
 		<property name="hibernate.search.autoregister_listeners">true</property>
 
 		<property name="hibernate.search.default.directory_provider">filesystem</property>
-		<property name="hibernate.search.default.indexBase">/home/bourkadi/indexes</property>
+		<property name="hibernate.search.default.indexBase">/home/bourkadix/indexes</property>
 
 		<mapping class="com.bourgadix.dao.Sexe" />
 		<mapping class="com.bourgadix.dao.Country" />
