@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+
+
+
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">7</property>
+		<property name="hibernate.c3p0.max_size">53</property>
+		<property name="hibernate.c3p0.timeout">230400</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.idle_test_period">1000</property>
+		<property name="hibernate.c3p0.validate">true</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider</property>
+
+
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		<property name="format_sql">true</property>
+		<property name="use_sql_comments">true</property>
+
+		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">mysqlroot</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cabinets</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.search.autoregister_listeners">true</property>
+
+		<property name="hibernate.search.default.directory_provider">filesystem</property>
+		<property name="hibernate.search.default.indexBase">/home/bourkadi/indexes</property>
+
+		<mapping class="com.bourgadix.dao.Sexe" />
+		<mapping class="com.bourgadix.dao.Country" />
+		<mapping class="com.bourgadix.dao.StatusVisit" />
+		<mapping class="com.bourgadix.dao.Visit" />
+		<mapping class="com.bourgadix.dao.Medicament" />
+		<mapping class="com.bourgadix.dao.Client" />
+		<mapping class="com.bourgadix.dao.Variable" />
+		<mapping class="com.bourgadix.dao.Illness" />
+		<mapping class="com.bourgadix.dao.Role" />
+		<mapping class="com.bourgadix.dao.User" />
+		<mapping class="com.bourgadix.dao.TypeVisit" />
+		<mapping class="com.bourgadix.dao.Prescription" />
+		<mapping class="com.bourgadix.dao.VisitHistory" />
+		<mapping class="com.bourgadix.dao.Treatment" />
+
+	</session-factory>
+</hibernate-configuration>
