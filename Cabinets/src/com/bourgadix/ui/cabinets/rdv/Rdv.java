@@ -15,6 +15,7 @@ import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.TypeVisit;
 import com.bourgadix.dao.Visit;
+import com.bourgadix.ui.cabinets.authentification.CurrentUser;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -118,7 +119,8 @@ public class Rdv extends CssLayout implements View {
 	public Rdv() {
 		setSizeUndefined();
 		// Create the calendar
-
+		String user=CurrentUser.get();
+		Notification.show("This is the user>"+user);
 		final Calendar calendar = new Calendar(new MyEventProvider());
 		calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
 		calendar.setLocale(new Locale("fr", "FR"));
@@ -201,6 +203,7 @@ public class Rdv extends CssLayout implements View {
 
 		DateField dateField = new DateField("Date de visite");
 		dateField.setResolution(Resolution.MINUTE);
+		dateField.setLocale(Locale.FRANCE);
 		content.addComponent(fillClients());
 		content.addComponent(dateField);
 		content.addComponent(fillVisitType());

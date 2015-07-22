@@ -1,6 +1,8 @@
 package com.bourgadix.ui.cabinets.rdv;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
@@ -45,6 +47,7 @@ public class RdvForm extends FormLayout {
 		super();
 		setMargin(true);
 		dateField.setResolution(Resolution.MINUTE);
+		dateField.setLocale(Locale.FRANCE);
 		// addComponent(fillClients());
 		addComponent(dateField);
 		addComponent(fillVisitType());
@@ -84,6 +87,9 @@ public class RdvForm extends FormLayout {
 		this.box = box;
 		setMargin(true);
 		dateField.setResolution(Resolution.MINUTE);
+		dateField.setLocale(Locale.FRANCE);
+		dateField.setTimeZone(TimeZone.getTimeZone("UTC"));
+
 		addComponent(fillClients());
 		addComponent(dateField);
 		addComponent(fillVisitType());
