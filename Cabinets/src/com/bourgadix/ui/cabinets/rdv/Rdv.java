@@ -254,19 +254,11 @@ public class Rdv extends CssLayout implements View {
 
 	public void showVisitWindow(int idv) {
 
-		Visit visit = daoService.get(Visit.class, idv);
 		final Window window = new Window("Window");
 		window.setWidth(300.0f, Unit.PIXELS);
 		window.center();
 		window.setModal(true);
-		final FormLayout content = new FormLayout();
-		TextField textField = new TextField("Nom", visit.getClient().getName());
-		DateField dateField = new DateField("Date de visite",
-				visit.getDateVisitTime());
-		dateField.setResolution(Resolution.MINUTE);
-		content.addComponent(textField);
-		content.addComponent(dateField);
-		content.setMargin(true);
+		RdvView content=new RdvView(idv);
 		window.setContent(content);
 		window.setWidth(450, UNITS_PIXELS);
 		UI.getCurrent().addWindow(window);

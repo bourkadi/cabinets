@@ -15,6 +15,7 @@ import com.bourgadix.ui.cabinets.rdv.EventsOfUserProvider;
 import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
 import com.bourgadix.ui.cabinets.rdv.MyEventProvider;
 import com.bourgadix.ui.cabinets.rdv.RdvForm;
+import com.bourgadix.ui.cabinets.rdv.RdvView;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -238,19 +239,11 @@ public class ClientView extends FormLayout implements View {
 
 	public void showVisitWindow(int idv) {
 
-		Visit visit = daoService.get(Visit.class, idv);
 		final Window window = new Window("Window");
 		window.setWidth(300.0f, Unit.PIXELS);
 		window.center();
 		window.setModal(true);
-		final FormLayout content = new FormLayout();
-		TextField textField = new TextField("Nom", visit.getClient().getName());
-		DateField dateField = new DateField("Date de visite",
-				visit.getDateVisitTime());
-		dateField.setResolution(Resolution.MINUTE);
-		content.addComponent(textField);
-		content.addComponent(dateField);
-		content.setMargin(true);
+		RdvView content=new RdvView(idv);
 		window.setContent(content);
 		window.setWidth(450, UNITS_PIXELS);
 		UI.getCurrent().addWindow(window);
