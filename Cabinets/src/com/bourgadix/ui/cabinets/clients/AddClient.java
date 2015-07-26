@@ -173,6 +173,7 @@ public class AddClient extends FormLayout implements View {
 
 		// Save DAO to backend with direct synchronous service API
 		if (validate()) {
+			System.out.println("inside save");
 			ClientsService service = new ClientManagement();
 			int c = ((Country) countries.getValue()).getIdcountry();
 			Message message = service.addClient("amine", firstName.getValue(),

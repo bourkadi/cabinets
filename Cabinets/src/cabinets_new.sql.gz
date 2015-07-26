@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 26, 2015 at 03:22 AM
+-- Generation Time: Jul 27, 2015 at 01:02 AM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -41,7 +41,16 @@ CREATE TABLE IF NOT EXISTS `client` (
   `nationality` int(11) DEFAULT NULL,
   `sexe` int(11) DEFAULT NULL,
   `user` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`idclient`, `adress`, `birthdate`, `birthplace`, `created_date`, `identity_number`, `lastname`, `name`, `note`, `phone`, `phonefix`, `nationality`, `sexe`, `user`) VALUES
+(1, '', NULL, '', 1437928263, '', 'dfchc', 'tes', '', '', '', 10, 1, 1),
+(2, '', NULL, '', 1437934009, '', 'test', 'test', '', '', '', 144, 1, 1),
+(3, '', NULL, '', 1437934728, '', 'Hamid', 'Hamid', '', '', '', 5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -51,8 +60,254 @@ CREATE TABLE IF NOT EXISTS `client` (
 
 CREATE TABLE IF NOT EXISTS `country` (
 `idcountry` int(11) NOT NULL,
+  `code` varchar(10) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `country`
+--
+
+INSERT INTO `country` (`idcountry`, `code`, `country`) VALUES
+(1, 'AFG', 'Afghanistan'),
+(2, 'ALB', 'Albanie'),
+(3, 'ATA', 'Antarctique'),
+(4, 'DZA', 'Algérie'),
+(5, 'ASM', 'Samoa Américaines'),
+(6, 'AND', 'Andorre'),
+(7, 'AGO', 'Angola'),
+(8, 'ATG', 'Antigua-et-Barbuda'),
+(9, 'AZE', 'Azerbaïdjan'),
+(10, 'ARG', 'Argentine'),
+(11, 'AUS', 'Australie'),
+(12, 'AUT', 'Autriche'),
+(13, 'BHS', 'Bahamas'),
+(14, 'BHR', 'Bahreïn'),
+(15, 'BGD', 'Bangladesh'),
+(16, 'ARM', 'Arménie'),
+(17, 'BRB', 'Barbade'),
+(18, 'BEL', 'Belgique'),
+(19, 'BMU', 'Bermudes'),
+(20, 'BTN', 'Bhoutan'),
+(21, 'BOL', 'Bolivie'),
+(22, 'BIH', 'Bosnie-Herzégovine'),
+(23, 'BWA', 'Botswana'),
+(24, 'BVT', 'Île Bouvet'),
+(25, 'BRA', 'Brésil'),
+(26, 'BLZ', 'Belize'),
+(27, 'IOT', 'Territoire Britannique de l''Océan Indien'),
+(28, 'SLB', 'Îles Salomon'),
+(29, 'VGB', 'Îles Vierges Britanniques'),
+(30, 'BRN', 'Brunéi Darussalam'),
+(31, 'BGR', 'Bulgarie'),
+(32, 'MMR', 'Myanmar'),
+(33, 'BDI', 'Burundi'),
+(34, 'BLR', 'Bélarus'),
+(35, 'KHM', 'Cambodge'),
+(36, 'CMR', 'Cameroun'),
+(37, 'CAN', 'Canada'),
+(38, 'CPV', 'Cap-vert'),
+(39, 'CYM', 'Îles Caïmanes'),
+(40, 'CAF', 'République Centrafricaine'),
+(41, 'LKA', 'Sri Lanka'),
+(42, 'TCD', 'Tchad'),
+(43, 'CHL', 'Chili'),
+(44, 'CHN', 'Chine'),
+(45, 'TWN', 'Taïwan'),
+(46, 'CXR', 'Île Christmas'),
+(47, 'CCK', 'Îles Cocos (Keeling)'),
+(48, 'COL', 'Colombie'),
+(49, 'COM', 'Comores'),
+(50, 'MYT', 'Mayotte'),
+(51, 'COG', 'République du Congo'),
+(52, 'COD', 'République Démocratique du Congo'),
+(53, 'COK', 'Îles Cook'),
+(54, 'CRI', 'Costa Rica'),
+(55, 'HRV', 'Croatie'),
+(56, 'CUB', 'Cuba'),
+(57, 'CYP', 'Chypre'),
+(58, 'CZE', 'République Tchèque'),
+(59, 'BEN', 'Bénin'),
+(60, 'DNK', 'Danemark'),
+(61, 'DMA', 'Dominique'),
+(62, 'DOM', 'République Dominicaine'),
+(63, 'ECU', 'Équateur'),
+(64, 'SLV', 'El Salvador'),
+(65, 'GNQ', 'Guinée Équatoriale'),
+(66, 'ETH', 'Éthiopie'),
+(67, 'ERI', 'Érythrée'),
+(68, 'EST', 'Estonie'),
+(69, 'FRO', 'Îles Féroé'),
+(70, 'FLK', 'Îles (malvinas) Falkland'),
+(71, 'SGS', 'Géorgie du Sud et les Îles Sandwich du Sud'),
+(72, 'FJI', 'Fidji'),
+(73, 'FIN', 'Finlande'),
+(74, 'ALA', 'Îles Åland'),
+(75, 'FRA', 'France'),
+(76, 'GUF', 'Guyane Française'),
+(77, 'PYF', 'Polynésie Française'),
+(78, 'ATF', 'Terres Australes Françaises'),
+(79, 'DJI', 'Djibouti'),
+(80, 'GAB', 'Gabon'),
+(81, 'GEO', 'Géorgie'),
+(82, 'GMB', 'Gambie'),
+(83, 'PSE', 'Territoire Palestinien Occupé'),
+(84, 'DEU', 'Allemagne'),
+(85, 'GHA', 'Ghana'),
+(86, 'GIB', 'Gibraltar'),
+(87, 'KIR', 'Kiribati'),
+(88, 'GRC', 'Grèce'),
+(89, 'GRL', 'Groenland'),
+(90, 'GRD', 'Grenade'),
+(91, 'GLP', 'Guadeloupe'),
+(92, 'GUM', 'Guam'),
+(93, 'GTM', 'Guatemala'),
+(94, 'GIN', 'Guinée'),
+(95, 'GUY', 'Guyana'),
+(96, 'HTI', 'Haïti'),
+(97, 'HMD', 'Îles Heard et Mcdonald'),
+(98, 'VAT', 'Saint-Siège (état de la Cité du Vatican)'),
+(99, 'HND', 'Honduras'),
+(100, 'HKG', 'Hong-Kong'),
+(101, 'HUN', 'Hongrie'),
+(102, 'ISL', 'Islande'),
+(103, 'IND', 'Inde'),
+(104, 'IDN', 'Indonésie'),
+(105, 'IRN', 'République Islamique d''Iran'),
+(106, 'IRQ', 'Iraq'),
+(107, 'IRL', 'Irlande'),
+(109, 'ITA', 'Italie'),
+(110, 'CIV', 'Côte d''Ivoire'),
+(111, 'JAM', 'Jamaïque'),
+(112, 'JPN', 'Japon'),
+(113, 'KAZ', 'Kazakhstan'),
+(114, 'JOR', 'Jordanie'),
+(115, 'KEN', 'Kenya'),
+(116, 'PRK', 'République Populaire Démocratique de Corée'),
+(117, 'KOR', 'République de Corée'),
+(118, 'KWT', 'Koweït'),
+(119, 'KGZ', 'Kirghizistan'),
+(120, 'LAO', 'République Démocratique Populaire Lao'),
+(121, 'LBN', 'Liban'),
+(122, 'LSO', 'Lesotho'),
+(123, 'LVA', 'Lettonie'),
+(124, 'LBR', 'Libéria'),
+(125, 'LBY', 'Jamahiriya Arabe Libyenne'),
+(126, 'LIE', 'Liechtenstein'),
+(127, 'LTU', 'Lituanie'),
+(128, 'LUX', 'Luxembourg'),
+(129, 'MAC', 'Macao'),
+(130, 'MDG', 'Madagascar'),
+(131, 'MWI', 'Malawi'),
+(132, 'MYS', 'Malaisie'),
+(133, 'MDV', 'Maldives'),
+(134, 'MLI', 'Mali'),
+(135, 'MLT', 'Malte'),
+(136, 'MTQ', 'Martinique'),
+(137, 'MRT', 'Mauritanie'),
+(138, 'MUS', 'Maurice'),
+(139, 'MEX', 'Mexique'),
+(140, 'MCO', 'Monaco'),
+(141, 'MNG', 'Mongolie'),
+(142, 'MDA', 'République de Moldova'),
+(143, 'MSR', 'Montserrat'),
+(144, 'MAR', 'Maroc'),
+(145, 'MOZ', 'Mozambique'),
+(146, 'OMN', 'Oman'),
+(147, 'NAM', 'Namibie'),
+(148, 'NRU', 'Nauru'),
+(149, 'NPL', 'Népal'),
+(150, 'NLD', 'Pays-Bas'),
+(151, 'ANT', 'Antilles Néerlandaises'),
+(152, 'ABW', 'Aruba'),
+(153, 'NCL', 'Nouvelle-Calédonie'),
+(154, 'VUT', 'Vanuatu'),
+(155, 'NZL', 'Nouvelle-Zélande'),
+(156, 'NIC', 'Nicaragua'),
+(157, 'NER', 'Niger'),
+(158, 'NGA', 'Nigéria'),
+(159, 'NIU', 'Niué'),
+(160, 'NFK', 'Île Norfolk'),
+(161, 'NOR', 'Norvège'),
+(162, 'MNP', 'Îles Mariannes du Nord'),
+(163, 'UMI', 'Îles Mineures Éloignées des États-Unis'),
+(164, 'FSM', 'États Fédérés de Micronésie'),
+(165, 'MHL', 'Îles Marshall'),
+(166, 'PLW', 'Palaos'),
+(167, 'PAK', 'Pakistan'),
+(168, 'PAN', 'Panama'),
+(169, 'PNG', 'Papouasie-Nouvelle-Guinée'),
+(170, 'PRY', 'Paraguay'),
+(171, 'PER', 'Pérou'),
+(172, 'PHL', 'Philippines'),
+(173, 'PCN', 'Pitcairn'),
+(174, 'POL', 'Pologne'),
+(175, 'PRT', 'Portugal'),
+(176, 'GNB', 'Guinée-Bissau'),
+(177, 'TLS', 'Timor-Leste'),
+(178, 'PRI', 'Porto Rico'),
+(179, 'QAT', 'Qatar'),
+(180, 'REU', 'Réunion'),
+(181, 'ROU', 'Roumanie'),
+(182, 'RUS', 'Fédération de Russie'),
+(183, 'RWA', 'Rwanda'),
+(184, 'SHN', 'Sainte-Hélène'),
+(185, 'KNA', 'Saint-Kitts-et-Nevis'),
+(186, 'AIA', 'Anguilla'),
+(187, 'LCA', 'Sainte-Lucie'),
+(188, 'SPM', 'Saint-Pierre-et-Miquelon'),
+(189, 'VCT', 'Saint-Vincent-et-les Grenadines'),
+(190, 'SMR', 'Saint-Marin'),
+(191, 'STP', 'Sao Tomé-et-Principe'),
+(192, 'SAU', 'Arabie Saoudite'),
+(193, 'SEN', 'Sénégal'),
+(194, 'SYC', 'Seychelles'),
+(195, 'SLE', 'Sierra Leone'),
+(196, 'SGP', 'Singapour'),
+(197, 'SVK', 'Slovaquie'),
+(198, 'VNM', 'Viet Nam'),
+(199, 'SVN', 'Slovénie'),
+(200, 'SOM', 'Somalie'),
+(201, 'ZAF', 'Afrique du Sud'),
+(202, 'ZWE', 'Zimbabwe'),
+(203, 'ESP', 'Espagne'),
+(205, 'SDN', 'Soudan'),
+(206, 'SUR', 'Suriname'),
+(207, 'SJM', 'Svalbard etÎle Jan Mayen'),
+(208, 'SWZ', 'Swaziland'),
+(209, 'SWE', 'Suède'),
+(210, 'CHE', 'Suisse'),
+(211, 'SYR', 'République Arabe Syrienne'),
+(212, 'TJK', 'Tadjikistan'),
+(213, 'THA', 'Thaïlande'),
+(214, 'TGO', 'Togo'),
+(215, 'TKL', 'Tokelau'),
+(216, 'TON', 'Tonga'),
+(217, 'TTO', 'Trinité-et-Tobago'),
+(218, 'ARE', 'Émirats Arabes Unis'),
+(219, 'TUN', 'Tunisie'),
+(220, 'TUR', 'Turquie'),
+(221, 'TKM', 'Turkménistan'),
+(222, 'TCA', 'Îles Turks et Caïques'),
+(223, 'TUV', 'Tuvalu'),
+(224, 'UGA', 'Ouganda'),
+(225, 'UKR', 'Ukraine'),
+(226, 'MKD', 'L''ex-République Yougoslave de Macédoine'),
+(227, 'EGY', 'Égypte'),
+(228, 'GBR', 'Royaume-Uni'),
+(229, 'IMN', 'Île de Man'),
+(230, 'TZA', 'République-Unie de Tanzanie'),
+(231, 'USA', 'États-Unis'),
+(232, 'VIR', 'Îles Vierges des États-Unis'),
+(233, 'BFA', 'Burkina Faso'),
+(234, 'URY', 'Uruguay'),
+(235, 'UZB', 'Ouzbékistan'),
+(236, 'VEN', 'Venezuela'),
+(237, 'WLF', 'Wallis et Futuna'),
+(238, 'WSM', 'Samoa'),
+(239, 'YEM', 'Yémen'),
+(240, 'SCG', 'Serbie-et-Monténégro'),
+(241, 'ZMB', 'Zambie');
 
 -- --------------------------------------------------------
 
@@ -120,7 +375,17 @@ CREATE TABLE IF NOT EXISTS `role` (
 `idrole` int(11) NOT NULL,
   `description` longtext,
   `role` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`idrole`, `description`, `role`) VALUES
+(1, 'Manage users,roles,clients,parameters,full access to everything.', 'manager'),
+(2, 'Can manage:                        * Clients;                        * Medicaments & illnesses ;                        * RDV;', 'user'),
+(3, ' Manage only:\r\n                        * RDV ;\r\n                        * Clients;\r\n', 'collaborator'),
+(4, 'JUST VIEW CONETNT;    ', 'viewer');
 
 -- --------------------------------------------------------
 
@@ -131,7 +396,15 @@ CREATE TABLE IF NOT EXISTS `role` (
 CREATE TABLE IF NOT EXISTS `sexe` (
 `idsexe` int(11) NOT NULL,
   `sexe` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sexe`
+--
+
+INSERT INTO `sexe` (`idsexe`, `sexe`) VALUES
+(2, 'Féminin'),
+(1, 'Masculin');
 
 -- --------------------------------------------------------
 
@@ -142,7 +415,15 @@ CREATE TABLE IF NOT EXISTS `sexe` (
 CREATE TABLE IF NOT EXISTS `status_visit` (
 `idstatus_visit` int(11) NOT NULL,
   `status_visit` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status_visit`
+--
+
+INSERT INTO `status_visit` (`idstatus_visit`, `status_visit`) VALUES
+(2, 'Annulé'),
+(1, 'En cours');
 
 -- --------------------------------------------------------
 
@@ -176,7 +457,15 @@ CREATE TABLE IF NOT EXISTS `treatment_perscription` (
 CREATE TABLE IF NOT EXISTS `type_visit` (
 `idtype_visit` int(11) NOT NULL,
   `type_visit` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `type_visit`
+--
+
+INSERT INTO `type_visit` (`idtype_visit`, `type_visit`) VALUES
+(2, 'Consultation'),
+(1, 'Première visite');
 
 -- --------------------------------------------------------
 
@@ -213,6 +502,16 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   `idrole` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`idUser`, `idrole`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -223,7 +522,18 @@ CREATE TABLE IF NOT EXISTS `variable` (
 `idvariable` int(11) NOT NULL,
   `value` varchar(45) DEFAULT NULL,
   `variable` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `variable`
+--
+
+INSERT INTO `variable` (`idvariable`, `value`, `variable`) VALUES
+(1, 'Cabinet de Mr Bourkadi', 'Nom du cabinet'),
+(2, '08', 'Heure de début'),
+(3, '18', 'Heure de fin'),
+(4, 'Lundi', 'Premier jour de la semaine'),
+(5, 'Vendredi', 'Dernier jour de la semaine');
 
 -- --------------------------------------------------------
 
@@ -240,7 +550,15 @@ CREATE TABLE IF NOT EXISTS `visit` (
   `status_visit` int(11) DEFAULT NULL,
   `type_visit` int(11) DEFAULT NULL,
   `user` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `visit`
+--
+
+INSERT INTO `visit` (`idvisit`, `datecreated`, `datevisit`, `note`, `client`, `status_visit`, `type_visit`, `user`) VALUES
+(1, 1437934046, 1438088820, '', 2, 2, 1, 1),
+(2, 1437934753, 1438259400, 'test', 3, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -375,12 +693,12 @@ ALTER TABLE `visit_history`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-MODIFY `idcountry` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idcountry` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=242;
 --
 -- AUTO_INCREMENT for table `illness`
 --
@@ -400,17 +718,17 @@ MODIFY `idprescription` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `sexe`
 --
 ALTER TABLE `sexe`
-MODIFY `idsexe` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idsexe` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `status_visit`
 --
 ALTER TABLE `status_visit`
-MODIFY `idstatus_visit` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idstatus_visit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `treatment`
 --
@@ -420,7 +738,7 @@ MODIFY `idtreatment` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `type_visit`
 --
 ALTER TABLE `type_visit`
-MODIFY `idtype_visit` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idtype_visit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -430,12 +748,12 @@ MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `variable`
 --
 ALTER TABLE `variable`
-MODIFY `idvariable` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idvariable` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `visit`
 --
 ALTER TABLE `visit`
-MODIFY `idvisit` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idvisit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `visit_history`
 --

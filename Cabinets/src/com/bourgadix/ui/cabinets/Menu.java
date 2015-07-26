@@ -68,7 +68,7 @@ public class Menu extends CssLayout {
 		MenuBar logoutMenu = new MenuBar();
 		MenuBar help=new MenuBar();
 		logoutMenu.addItem("Aide", FontAwesome.UNIVERSITY, null);
-		logoutMenu.addItem("Logout", FontAwesome.SIGN_OUT, new Command() {
+		logoutMenu.addItem("Se déconnecter", FontAwesome.SIGN_OUT, new Command() {
 
 			@Override
 			public void menuSelected(MenuItem selectedItem) {
@@ -76,6 +76,8 @@ public class Menu extends CssLayout {
 				Page.getCurrent().reload();
 			}
 		});
+
+
 
 		logoutMenu.addStyleName("user-menu");
 

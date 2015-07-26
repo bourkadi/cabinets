@@ -21,9 +21,8 @@ public class ClientManagement implements ClientsService {
 	private AccessService access = new AccessManagement();
 
 	@Override
-	public Message addClient(int us, String name, String lastname,
-			String identity, String birthplace, Date birthdate, int s, int c,
-			String ph, String phf, String addr, String note) {
+	public Message addClient(int us, String name, String lastname, String identity, String birthplace, Date birthdate,
+			int s, int c, String ph, String phf, String addr, String note) {
 		// TODO Auto-generated method stub
 		Message message = new Message();
 		if (!access.canUpdateClient(us)) {
@@ -70,20 +69,12 @@ public class ClientManagement implements ClientsService {
 
 	}
 
-	public static void main(String[] args) {
-		DaoService dao = new Dao();
-		User user = (User) dao.getByProperty(User.class, "username", "reda")
-				.get(0);
-		System.out.println(user.getEmail());
-	}
-
 	public Boolean isExisted(String identity) {
 		// TODO Auto-generated method stub
-		/*if (dao.getByProperty(Client.class, "identityNumber", identity).size() > 0) {
-			return true;
-		} else {
-			return false;
-		}*/
+		/*
+		 * if (dao.getByProperty(Client.class, "identityNumber",
+		 * identity).size() > 0) { return true; } else { return false; }
+		 */
 		return false;
 	}
 
@@ -94,9 +85,8 @@ public class ClientManagement implements ClientsService {
 	}
 
 	@Override
-	public Message addClient(String us, String name, String lastname,
-			String identity, String birthplace, Date birthdate, int s, int c,
-			String ph, String phf, String addr, String note) {
+	public Message addClient(String us, String name, String lastname, String identity, String birthplace,
+			Date birthdate, int s, int c, String ph, String phf, String addr, String note) {
 		Message message = new Message();
 		User user = (User) dao.getByProperty(User.class, "username", us).get(0);
 		if (!access.canUpdateClient(user.getIdUser())) {
@@ -127,7 +117,7 @@ public class ClientManagement implements ClientsService {
 				message.setMessage("Client " + name + " add with success");
 				message.setValue(true);
 				message.setIdClient(client.getIdclient());
-				System.out.println("ID CLIENT HERE!=>"+message.getIdClient());
+				System.out.println("ID CLIENT HERE!=>" + message.getIdClient());
 				return message;
 
 			} else {
@@ -140,4 +130,11 @@ public class ClientManagement implements ClientsService {
 		}
 	}
 
+	public static void main(String[] args) {
+		ClientsService service = new ClientManagement();
+
+		Message message = service.addClient(1, "test", "testy", "hhhh", "fes", new Date("12/10/1988"), 1, 1,
+				"HHHH", "hhh", "hhhhh", "dddrr");
+		System.out.println("le message=>"+message.getMessage());
+	}
 }

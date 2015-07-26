@@ -26,6 +26,7 @@ public class Country implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = -7587940495894258731L;
 	private Integer idcountry;
+	private String code;
 	private String country;
 	private Set<Client> clients = new HashSet<Client>(0);
 
@@ -64,6 +65,15 @@ public class Country implements java.io.Serializable {
 
 	public void setClients(Set<Client> clients) {
 		this.clients = clients;
+	}
+
+	@Column(name = "code", length = 10)
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

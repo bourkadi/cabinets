@@ -33,8 +33,8 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.search.autoregister_listeners">true</property>
 		
-		<property name="hibernate.hbm2ddl.auto">create</property>
-		
+<!-- 		<property name="hibernate.hbm2ddl.auto">create</property>
+ -->		
 
 		<property name="hibernate.search.default.directory_provider">filesystem</property>
 		<property name="hibernate.search.default.indexBase">/home/bourkadix/indexes</property>

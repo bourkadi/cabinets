@@ -2,6 +2,7 @@ package com.bourgadix.ui.cabinets;
 
 import com.bourgadix.ui.cabinets.clients.ClientList;
 import com.bourgadix.ui.cabinets.rdv.Rdv;
+import com.bourgadix.ui.cabinets.settings.Settings;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
@@ -25,7 +26,7 @@ public class MainScreen extends HorizontalLayout {
 	     //   menu.addView(AddClient.class,  AddClient.URL, AddClient.NAME, FontAwesome.PLUS);
 	        menu.addView(Rdv.class, Rdv.URL, Rdv.NAME, FontAwesome.CALENDAR);
 	        menu.addView(ClientList.class,  ClientList.URL, ClientList.NAME, FontAwesome.LIST);
-
+	        menu.addView(Settings.class,  Settings.URL, Settings.NAME, FontAwesome.GEARS);
 
 	        
 	        navigator.addViewChangeListener(viewChangeListener);
