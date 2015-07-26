@@ -70,7 +70,7 @@ public class Treatment {
 		Prescription prescription=new Prescription();
 		Visit visit=dao.get(Visit.class, 1);
 		prescription.getTreatments().add(treatment);
-		prescription.setVisit(visit);
+		//prescription.setVisit(visit);
 		prescription.setCreatedate(12345671);
 		dao.save(prescription);
 	

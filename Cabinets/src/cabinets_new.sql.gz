@@ -1,0 +1,495 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.13.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jul 26, 2015 at 03:22 AM
+-- Server version: 5.5.44-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.11
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `cabinets`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+
+CREATE TABLE IF NOT EXISTS `client` (
+`idclient` int(11) NOT NULL,
+  `adress` longtext,
+  `birthdate` date DEFAULT NULL,
+  `birthplace` varchar(200) DEFAULT NULL,
+  `created_date` int(11) DEFAULT NULL,
+  `identity_number` varchar(45) DEFAULT NULL,
+  `lastname` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `note` longtext,
+  `phone` varchar(45) DEFAULT NULL,
+  `phonefix` varchar(45) DEFAULT NULL,
+  `nationality` int(11) DEFAULT NULL,
+  `sexe` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country`
+--
+
+CREATE TABLE IF NOT EXISTS `country` (
+`idcountry` int(11) NOT NULL,
+  `country` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `illness`
+--
+
+CREATE TABLE IF NOT EXISTS `illness` (
+`idillness` int(11) NOT NULL,
+  `description` longtext,
+  `illness` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `illness_medicaments`
+--
+
+CREATE TABLE IF NOT EXISTS `illness_medicaments` (
+  `idillness` int(11) NOT NULL,
+  `idmedicament` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicament`
+--
+
+CREATE TABLE IF NOT EXISTS `medicament` (
+`idmedicament` int(11) NOT NULL,
+  `description` longtext,
+  `label` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `medicament`
+--
+
+INSERT INTO `medicament` (`idmedicament`, `description`, `label`) VALUES
+(1, NULL, 'Oraciline');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prescription`
+--
+
+CREATE TABLE IF NOT EXISTS `prescription` (
+`idprescription` int(11) NOT NULL,
+  `createdate` int(11) NOT NULL,
+  `prescriptiondate` date NOT NULL,
+  `client` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+`idrole` int(11) NOT NULL,
+  `description` longtext,
+  `role` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sexe`
+--
+
+CREATE TABLE IF NOT EXISTS `sexe` (
+`idsexe` int(11) NOT NULL,
+  `sexe` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status_visit`
+--
+
+CREATE TABLE IF NOT EXISTS `status_visit` (
+`idstatus_visit` int(11) NOT NULL,
+  `status_visit` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `treatment`
+--
+
+CREATE TABLE IF NOT EXISTS `treatment` (
+`idtreatment` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `medicament` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `treatment_perscription`
+--
+
+CREATE TABLE IF NOT EXISTS `treatment_perscription` (
+  `idprescription` int(11) NOT NULL,
+  `idtreatment` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_visit`
+--
+
+CREATE TABLE IF NOT EXISTS `type_visit` (
+`idtype_visit` int(11) NOT NULL,
+  `type_visit` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+`idUser` int(11) NOT NULL,
+  `connected` tinyint(1) DEFAULT NULL,
+  `creation_date` int(11) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL,
+  `last_connected_time` int(11) DEFAULT NULL,
+  `password` varchar(128) NOT NULL,
+  `username` varchar(45) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`idUser`, `connected`, `creation_date`, `email`, `enabled`, `last_connected_time`, `password`, `username`) VALUES
+(1, NULL, 0, NULL, 1, 0, '$2a$11$Ie8v6/uf5udc.fi7UVGAa.rdVN6rCDaW.xtKGSMJnIYCS5ujuUpFW', 'amine');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `idUser` int(11) NOT NULL,
+  `idrole` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `variable`
+--
+
+CREATE TABLE IF NOT EXISTS `variable` (
+`idvariable` int(11) NOT NULL,
+  `value` varchar(45) DEFAULT NULL,
+  `variable` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visit`
+--
+
+CREATE TABLE IF NOT EXISTS `visit` (
+`idvisit` int(11) NOT NULL,
+  `datecreated` int(11) DEFAULT NULL,
+  `datevisit` int(11) DEFAULT NULL,
+  `note` longtext,
+  `client` int(11) DEFAULT NULL,
+  `status_visit` int(11) DEFAULT NULL,
+  `type_visit` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visit_history`
+--
+
+CREATE TABLE IF NOT EXISTS `visit_history` (
+`idvisit_history` int(11) NOT NULL,
+  `client` int(11) DEFAULT NULL,
+  `datevisit` datetime DEFAULT NULL,
+  `note` longtext,
+  `status_visit` varchar(255) DEFAULT NULL,
+  `type_visit` varchar(255) DEFAULT NULL,
+  `updatedate` int(11) DEFAULT NULL,
+  `version` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL,
+  `visit` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+ ADD PRIMARY KEY (`idclient`), ADD KEY `FK_swous6y8a666os20y7mppprsq` (`nationality`), ADD KEY `FK_rnem0y6mo2ia5eax3vhh2jpfu` (`sexe`), ADD KEY `FK_a8fuatrj1tmj6ih0r2ujybp36` (`user`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+ ADD PRIMARY KEY (`idcountry`), ADD UNIQUE KEY `UK_3s51q344kj9jse05r86moo9ka` (`country`);
+
+--
+-- Indexes for table `illness`
+--
+ALTER TABLE `illness`
+ ADD PRIMARY KEY (`idillness`);
+
+--
+-- Indexes for table `illness_medicaments`
+--
+ALTER TABLE `illness_medicaments`
+ ADD PRIMARY KEY (`idillness`,`idmedicament`), ADD UNIQUE KEY `UK_4yst569pgtuqehe9u5b5wyrmb` (`idmedicament`), ADD KEY `FK_4yst569pgtuqehe9u5b5wyrmb` (`idmedicament`), ADD KEY `FK_nv3gdurs9o49wuv730hkme2cj` (`idillness`);
+
+--
+-- Indexes for table `medicament`
+--
+ALTER TABLE `medicament`
+ ADD PRIMARY KEY (`idmedicament`);
+
+--
+-- Indexes for table `prescription`
+--
+ALTER TABLE `prescription`
+ ADD PRIMARY KEY (`idprescription`), ADD KEY `FK_s577l5dh9jo0qyndimww09vbp` (`client`), ADD KEY `FK_fv17u97qmvw9lrk2nh1q8mt1u` (`user`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+ ADD PRIMARY KEY (`idrole`), ADD UNIQUE KEY `UK_bjxn5ii7v7ygwx39et0wawu0q` (`role`);
+
+--
+-- Indexes for table `sexe`
+--
+ALTER TABLE `sexe`
+ ADD PRIMARY KEY (`idsexe`), ADD UNIQUE KEY `UK_55kxdwbgd8attog61valmf4ye` (`sexe`);
+
+--
+-- Indexes for table `status_visit`
+--
+ALTER TABLE `status_visit`
+ ADD PRIMARY KEY (`idstatus_visit`), ADD UNIQUE KEY `UK_j6hgjhuxy1xbj4eosjyjy49bb` (`status_visit`);
+
+--
+-- Indexes for table `treatment`
+--
+ALTER TABLE `treatment`
+ ADD PRIMARY KEY (`idtreatment`), ADD KEY `FK_t663hskekt21l3yi7gijrhass` (`medicament`);
+
+--
+-- Indexes for table `treatment_perscription`
+--
+ALTER TABLE `treatment_perscription`
+ ADD PRIMARY KEY (`idprescription`,`idtreatment`), ADD UNIQUE KEY `UK_iqd70xf03tvh1m5mpj80aebxu` (`idtreatment`), ADD KEY `FK_iqd70xf03tvh1m5mpj80aebxu` (`idtreatment`), ADD KEY `FK_8b6lxq3e1smj3k0wgminbhekw` (`idprescription`);
+
+--
+-- Indexes for table `type_visit`
+--
+ALTER TABLE `type_visit`
+ ADD PRIMARY KEY (`idtype_visit`), ADD UNIQUE KEY `UK_vm7h3rsf00igmimaoeiishmn` (`type_visit`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`idUser`), ADD UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`), ADD UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`);
+
+--
+-- Indexes for table `user_roles`
+--
+ALTER TABLE `user_roles`
+ ADD PRIMARY KEY (`idUser`,`idrole`), ADD UNIQUE KEY `UK_n9k3irql7vqopyop9olarqlya` (`idrole`), ADD KEY `FK_n9k3irql7vqopyop9olarqlya` (`idrole`), ADD KEY `FK_byhefslct1kxlls08e2104lk7` (`idUser`);
+
+--
+-- Indexes for table `variable`
+--
+ALTER TABLE `variable`
+ ADD PRIMARY KEY (`idvariable`), ADD UNIQUE KEY `UK_7chxdkdbyiu5neymliry936ew` (`variable`);
+
+--
+-- Indexes for table `visit`
+--
+ALTER TABLE `visit`
+ ADD PRIMARY KEY (`idvisit`), ADD KEY `FK_j04y6rihoeak0ev3oi3he3tuw` (`client`), ADD KEY `FK_61c6m6rmpjgm7rl6vt8l4mf6v` (`status_visit`), ADD KEY `FK_2nxruuogsxyfjf1h7vog16y0c` (`type_visit`), ADD KEY `FK_cj2ntieethua26unyobreevxb` (`user`);
+
+--
+-- Indexes for table `visit_history`
+--
+ALTER TABLE `visit_history`
+ ADD PRIMARY KEY (`idvisit_history`), ADD KEY `FK_pqhtsx6wd1b9vqngc001hnmxi` (`user`), ADD KEY `FK_gu5w3672rgkw692feifs8ahhb` (`visit`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+MODIFY `idcountry` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `illness`
+--
+ALTER TABLE `illness`
+MODIFY `idillness` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `medicament`
+--
+ALTER TABLE `medicament`
+MODIFY `idmedicament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `prescription`
+--
+ALTER TABLE `prescription`
+MODIFY `idprescription` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `sexe`
+--
+ALTER TABLE `sexe`
+MODIFY `idsexe` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `status_visit`
+--
+ALTER TABLE `status_visit`
+MODIFY `idstatus_visit` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `treatment`
+--
+ALTER TABLE `treatment`
+MODIFY `idtreatment` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `type_visit`
+--
+ALTER TABLE `type_visit`
+MODIFY `idtype_visit` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `variable`
+--
+ALTER TABLE `variable`
+MODIFY `idvariable` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `visit`
+--
+ALTER TABLE `visit`
+MODIFY `idvisit` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `visit_history`
+--
+ALTER TABLE `visit_history`
+MODIFY `idvisit_history` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `client`
+--
+ALTER TABLE `client`
+ADD CONSTRAINT `FK_a8fuatrj1tmj6ih0r2ujybp36` FOREIGN KEY (`user`) REFERENCES `user` (`idUser`),
+ADD CONSTRAINT `FK_rnem0y6mo2ia5eax3vhh2jpfu` FOREIGN KEY (`sexe`) REFERENCES `sexe` (`idsexe`),
+ADD CONSTRAINT `FK_swous6y8a666os20y7mppprsq` FOREIGN KEY (`nationality`) REFERENCES `country` (`idcountry`);
+
+--
+-- Constraints for table `illness_medicaments`
+--
+ALTER TABLE `illness_medicaments`
+ADD CONSTRAINT `FK_nv3gdurs9o49wuv730hkme2cj` FOREIGN KEY (`idillness`) REFERENCES `illness` (`idillness`),
+ADD CONSTRAINT `FK_4yst569pgtuqehe9u5b5wyrmb` FOREIGN KEY (`idmedicament`) REFERENCES `medicament` (`idmedicament`);
+
+--
+-- Constraints for table `treatment_perscription`
+--
+ALTER TABLE `treatment_perscription`
+ADD CONSTRAINT `FK_8b6lxq3e1smj3k0wgminbhekw` FOREIGN KEY (`idprescription`) REFERENCES `prescription` (`idprescription`),
+ADD CONSTRAINT `FK_iqd70xf03tvh1m5mpj80aebxu` FOREIGN KEY (`idtreatment`) REFERENCES `treatment` (`idtreatment`);
+
+--
+-- Constraints for table `user_roles`
+--
+ALTER TABLE `user_roles`
+ADD CONSTRAINT `FK_byhefslct1kxlls08e2104lk7` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`),
+ADD CONSTRAINT `FK_n9k3irql7vqopyop9olarqlya` FOREIGN KEY (`idrole`) REFERENCES `role` (`idrole`);
+
+--
+-- Constraints for table `visit`
+--
+ALTER TABLE `visit`
+ADD CONSTRAINT `FK_cj2ntieethua26unyobreevxb` FOREIGN KEY (`user`) REFERENCES `user` (`idUser`),
+ADD CONSTRAINT `FK_2nxruuogsxyfjf1h7vog16y0c` FOREIGN KEY (`type_visit`) REFERENCES `type_visit` (`idtype_visit`),
+ADD CONSTRAINT `FK_61c6m6rmpjgm7rl6vt8l4mf6v` FOREIGN KEY (`status_visit`) REFERENCES `status_visit` (`idstatus_visit`),
+ADD CONSTRAINT `FK_j04y6rihoeak0ev3oi3he3tuw` FOREIGN KEY (`client`) REFERENCES `client` (`idclient`);
+
+--
+-- Constraints for table `visit_history`
+--
+ALTER TABLE `visit_history`
+ADD CONSTRAINT `FK_gu5w3672rgkw692feifs8ahhb` FOREIGN KEY (`visit`) REFERENCES `visit` (`idvisit`),
+ADD CONSTRAINT `FK_pqhtsx6wd1b9vqngc001hnmxi` FOREIGN KEY (`user`) REFERENCES `user` (`idUser`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

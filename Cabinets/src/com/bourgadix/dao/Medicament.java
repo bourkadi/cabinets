@@ -71,5 +71,10 @@ public class Medicament implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+public static void main(String[] args) {
+	Medicament medicament=new Medicament();
+	medicament.setLabel("Oraciline");
+	DaoService daoService=new Dao();
+	daoService.save(medicament);
+}
 }

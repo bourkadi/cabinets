@@ -42,7 +42,7 @@ public class Visit implements java.io.Serializable {
 	private Integer datecreated;
 	private String note;
 	private Set<VisitHistory> visitHistories = new HashSet<VisitHistory>(0);
-	private Set<Prescription> prescriptions = new HashSet<Prescription>(0);
+	//private Set<Prescription> prescriptions = new HashSet<Prescription>(0);
 	
 	private Date dateVisitTime;
 
@@ -51,7 +51,7 @@ public class Visit implements java.io.Serializable {
 
 	public Visit(StatusVisit statusVisit, User users, TypeVisit typeVisit,
 			Client client, Integer datevisit, Integer datecreated,
-			Set<VisitHistory> visitHistories, Set<Prescription> prescriptions) {
+			Set<VisitHistory> visitHistories) {
 		this.statusVisit = statusVisit;
 		this.users = users;
 		this.typeVisit = typeVisit;
@@ -59,7 +59,7 @@ public class Visit implements java.io.Serializable {
 		this.datevisit = datevisit;
 		this.datecreated = datecreated;
 		this.visitHistories = visitHistories;
-		this.prescriptions = prescriptions;
+	
 	}
 
 	@Id
@@ -141,14 +141,14 @@ public class Visit implements java.io.Serializable {
 		this.visitHistories = visitHistories;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "visit")
-	public Set<Prescription> getPrescriptions() {
-		return this.prescriptions;
-	}
-
-	public void setPrescriptions(Set<Prescription> prescriptions) {
-		this.prescriptions = prescriptions;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "visit")
+//	public Set<Prescription> getPrescriptions() {
+//		return this.prescriptions;
+//	}
+//
+//	public void setPrescriptions(Set<Prescription> prescriptions) {
+//		this.prescriptions = prescriptions;
+//	}
 
 	@Column(name = "note", length = 65535)
 	public String getNote() {
