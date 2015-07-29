@@ -2,6 +2,7 @@ package com.bourgadix.ui.cabinets.clients;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import org.joda.time.MutableDateTime;
@@ -10,6 +11,8 @@ import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Visit;
+import com.bourgadix.services.VisitManagement;
+import com.bourgadix.services.VisitsService;
 import com.bourgadix.ui.cabinets.CabinetsUI;
 import com.bourgadix.ui.cabinets.rdv.EventsOfUserProvider;
 import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
@@ -164,10 +167,7 @@ public class ClientView extends FormLayout implements View {
 		layout.setMargin(true);
 		sheet.addTab(layout, "Info", FontAwesome.INFO);
 		CssLayout layout1 = calendarOfClient(client.getIdclient());
-		VerticalLayout layout2 = new VerticalLayout(
-				new Label(
-						"testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-						ContentMode.HTML));
+		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
 		sheet.addTab(layout1, "Calendrier", FontAwesome.CALENDAR);
 		sheet.addTab(layout2, "Historique des visites", FontAwesome.HISTORY);
 		addComponent(horizentalActionMenu());
@@ -175,10 +175,24 @@ public class ClientView extends FormLayout implements View {
 
 	}
 
+	public VerticalLayout visitHistory(int id) {
+		VisitsService service = new VisitManagement();
+
+		List<Visit> list = service.getVisitsOfClient(id, null, null);
+		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setMargin(true);
+		for (Visit visit : list) {
+			Label label = new Label(visit.getDateVisitTime() + ":"
+					+ visit.getClient().getLastname());
+			verticalLayout.addComponent(label);
+		}
+		return verticalLayout;
+	}
+
 	public CssLayout calendarOfClient(int i) {
 		CssLayout cssLayout = new CssLayout();
 		cssLayout.setWidthUndefined();
-		
+
 		Button monthlyView = new Button("Par mois");
 		EventsOfUserProvider provider = new EventsOfUserProvider();
 		provider.setIdc(i);
@@ -223,9 +237,9 @@ public class ClientView extends FormLayout implements View {
 
 			}
 		});
-		VerticalLayout layout=new VerticalLayout(monthlyView,calendar);
+		VerticalLayout layout = new VerticalLayout(monthlyView, calendar);
 		layout.setMargin(true);
-		cssLayout.addComponent(layout);	
+		cssLayout.addComponent(layout);
 		return cssLayout;
 	}
 
@@ -243,7 +257,7 @@ public class ClientView extends FormLayout implements View {
 		window.setWidth(300.0f, Unit.PIXELS);
 		window.center();
 		window.setModal(true);
-		RdvView content=new RdvView(idv);
+		RdvView content = new RdvView(idv);
 		window.setContent(content);
 		window.setWidth(450, UNITS_PIXELS);
 		UI.getCurrent().addWindow(window);

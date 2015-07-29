@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
@@ -84,7 +85,7 @@ public class Dao implements DaoService, Serializable {
 		final Criteria crit = session.createCriteria(type);
 		List<T> list = null;
 		try {
-			
+
 			list = crit.list();
 			logger.log(VERBOSE, "Fetching objects from "
 					+ type.getClass().getCanonicalName());
@@ -152,13 +153,12 @@ public class Dao implements DaoService, Serializable {
 		return list;
 	}
 
-
-
 	public static void main(String[] args) {
-		LocalDate now = new LocalDate();
-		System.out.println(now.withDayOfWeek(DateTimeConstants.MONDAY));
-
-		System.out.println(now.withDayOfWeek(DateTimeConstants.SUNDAY));
+		Dao dao = new Dao();
+		List<Visit> list = dao.getVisitsOfClient(2, 1438100000, 0);
+		for (Visit visit : list) {
+			System.out.println(visit.getIdvisit());
+		}
 	}
 
 	@Override
@@ -171,5 +171,31 @@ public class Dao implements DaoService, Serializable {
 	public List<Visit> getActifVisits(Integer a, Integer b) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Visit> getVisitsOfClient(int c, Integer a, Integer b) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		List<Visit> list = null;
+		try {
+			final Criteria crit = session.createCriteria(Visit.class);
+			// crit.add(Restrictions.between("datevisit", a, b));
+			if (a > 0) {
+				crit.add(Restrictions.ge("datevisit", a));
+			}
+			if (b > 0) {
+				crit.add(Restrictions.le("datevisit", b));
+				// crit.add(Restrictions.ne("statusVisit.idstatusVisit", 3));
+				crit.addOrder(Order.asc("datevisit"));
+			}
+			crit.add(Restrictions.eq("client.idclient", c));
+			list = crit.list();
+		} catch (RuntimeException e1) {
+			e1.printStackTrace();
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return list;
 	}
 }

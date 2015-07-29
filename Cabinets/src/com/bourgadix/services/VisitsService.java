@@ -25,6 +25,9 @@ public interface VisitsService {
 			Integer tp, String note);
 
 	public List<Visit> getVisits(Date date, Date d1);
+	
+	public List<Visit> getVisitsOfClient(int c,Date date, Date d1);
+
 
 	public List<Visit> getActifVisits(Date date, Date d);
 

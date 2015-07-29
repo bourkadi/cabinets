@@ -104,9 +104,13 @@ public class VisitManagement implements VisitsService {
 	}
 
 	private static Integer dateToUnixTimestamp(Date date) {
+		if (date == null) {
+			return 0;
+		}
 		long unixtime;
 		unixtime = date.getTime() / 1000L;
 		return (int) unixtime;
+
 	}
 
 	@Override
@@ -391,7 +395,7 @@ public class VisitManagement implements VisitsService {
 
 	public Boolean visitAlreadyExist(Date date) {
 		// TODO Auto-generated method stub
-		if(date==null){
+		if (date == null) {
 			return false;
 		}
 		int n = dao.getByProperty(Visit.class, "datevisit",
@@ -437,6 +441,16 @@ public class VisitManagement implements VisitsService {
 			message.setValue(true);
 			return message;
 		}
+	}
+
+	@Override
+	public List<Visit> getVisitsOfClient(int c, Date date, Date d1) {
+		// TODO Auto-generated method stub
+
+		int a = dateToUnixTimestamp(date);
+		int b = dateToUnixTimestamp(d1);
+
+		return dao.getVisitsOfClient(c, a, b);
 	}
 
 }
