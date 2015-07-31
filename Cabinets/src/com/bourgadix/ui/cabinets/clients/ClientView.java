@@ -1,5 +1,8 @@
 package com.bourgadix.ui.cabinets.clients;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.Locale;
 import org.joda.time.MutableDateTime;
 
 import com.bourgadix.dao.Client;
+import com.bourgadix.dao.Country;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Visit;
@@ -19,6 +23,7 @@ import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
 import com.bourgadix.ui.cabinets.rdv.MyEventProvider;
 import com.bourgadix.ui.cabinets.rdv.RdvForm;
 import com.bourgadix.ui.cabinets.rdv.RdvView;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -121,6 +126,18 @@ public class ClientView extends FormLayout implements View {
 		sheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
 		sheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
 
+		HorizontalLayout layout = info();
+		sheet.addTab(layout, "Info", FontAwesome.INFO);
+		CssLayout layout1 = calendarOfClient(client.getIdclient());
+		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
+		sheet.addTab(layout1, "Calendrier", FontAwesome.CALENDAR);
+		sheet.addTab(layout2, "Historique des visites", FontAwesome.HISTORY);
+		addComponent(horizentalActionMenu());
+		addComponent(sheet);
+
+	}
+
+	public HorizontalLayout info() {
 		TextField firstName = new TextField("Prénom");
 		TextField lastName = new TextField("Nom");
 		TextField phone = new TextField("Téléphone");
@@ -135,7 +152,7 @@ public class ClientView extends FormLayout implements View {
 
 		birthDate.setShowISOWeekNumbers(true);
 		birthDate.setValue(client.getBirthdate());
-		birthDate.setEnabled(false);
+		
 
 		checkbox.setIcon(FontAwesome.CHILD);
 
@@ -145,13 +162,15 @@ public class ClientView extends FormLayout implements View {
 		phone.setIcon(FontAwesome.PHONE);
 		firstName.setIcon(FontAwesome.PENCIL_SQUARE);
 		firstName.setValue(client.getName());
-		firstName.setEnabled(false);
+
 		lastName.setIcon(FontAwesome.PENCIL_SQUARE_O);
 		lastName.setValue(client.getLastname());
-		lastName.setEnabled(false);
+
 
 		email.addValidator(new EmailValidator(
 				"Vous devez saisir une adresse email valide"));
+		countries=fillCountries();
+
 
 		VerticalLayout lay1 = new VerticalLayout(firstName, lastName, checkbox,
 				birthDate, lieuNaissance, countries);
@@ -165,25 +184,34 @@ public class ClientView extends FormLayout implements View {
 		lay2.setMargin(new MarginInfo(false, false, false, true));
 		HorizontalLayout layout = new HorizontalLayout(lay1, lay2);
 		layout.setMargin(true);
-		sheet.addTab(layout, "Info", FontAwesome.INFO);
-		CssLayout layout1 = calendarOfClient(client.getIdclient());
-		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
-		sheet.addTab(layout1, "Calendrier", FontAwesome.CALENDAR);
-		sheet.addTab(layout2, "Historique des visites", FontAwesome.HISTORY);
-		addComponent(horizentalActionMenu());
-		addComponent(sheet);
-
+		return layout;
 	}
-
+	private ComboBox fillCountries() {
+		ComboBox countries = new ComboBox("Nationalité");
+		countries.setImmediate(true);
+		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(
+				Country.class);
+		nations.addAll(daoService.getAll(Country.class));
+		countries.setNullSelectionAllowed(true);
+		countries.setItemCaptionPropertyId("country");
+	//	countries.setInputPrompt("Nationality");
+		countries.setIcon(FontAwesome.BOOKMARK);
+		countries.select(nations.getItem(10));
+		countries.setContainerDataSource(nations);
+		
+		return countries;
+	}
 	public VerticalLayout visitHistory(int id) {
 		VisitsService service = new VisitManagement();
 
 		List<Visit> list = service.getVisitsOfClient(id, null, null);
 		VerticalLayout verticalLayout = new VerticalLayout();
 		verticalLayout.setMargin(true);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
 		for (Visit visit : list) {
-			Label label = new Label(visit.getDateVisitTime() + ":"
-					+ visit.getClient().getLastname());
+
+			Label label = new Label(sdf.format(visit.getDateVisitTime())
+					+ " : " + visit.getStatusVisit().getStatusVisit());
 			verticalLayout.addComponent(label);
 		}
 		return verticalLayout;
