@@ -1,7 +1,5 @@
 package com.bourgadix.ui.cabinets.clients;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,7 +18,6 @@ import com.bourgadix.services.VisitsService;
 import com.bourgadix.ui.cabinets.CabinetsUI;
 import com.bourgadix.ui.cabinets.rdv.EventsOfUserProvider;
 import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
-import com.bourgadix.ui.cabinets.rdv.MyEventProvider;
 import com.bourgadix.ui.cabinets.rdv.RdvForm;
 import com.bourgadix.ui.cabinets.rdv.RdvView;
 import com.vaadin.data.util.BeanItemContainer;
@@ -29,10 +26,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Calendar;
@@ -42,7 +36,6 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TabSheet;
@@ -91,6 +84,8 @@ public class ClientView extends FormLayout implements View {
 		client = daoService.get(Client.class, i);
 
 		prepareClient(client);
+		AddClient addClient=new AddClient(i);
+		addComponent(addClient);
 	}
 
 	public HorizontalLayout horizentalActionMenu() {

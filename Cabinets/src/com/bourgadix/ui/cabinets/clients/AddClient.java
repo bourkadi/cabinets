@@ -59,14 +59,24 @@ public class AddClient extends FormLayout implements View {
 	private TextField lieuNaissance = new TextField("Lieu de naissance");
 	private TextArea adress = new TextArea("Adresse");
 	private DaoService daoService = new Dao();
+	private int idc;
 
 	private Client client;
 	BeanFieldGroup<Client> formFieldBindings;
 	public static final String NAME = "Ajouter un client";
 	public static final String URL = "client/add";
 
+	private List<Country> countriesList = daoService.getAll(Country.class);
+
 	public AddClient() {
 		super();
+		configureComponents();
+		buildLayout();
+	}
+
+	public AddClient(int idc) {
+		super();
+		this.idc = idc;
 		configureComponents();
 		buildLayout();
 	}
@@ -130,8 +140,7 @@ public class AddClient extends FormLayout implements View {
 		firstName.setIcon(FontAwesome.PENCIL_SQUARE);
 		lastName.setIcon(FontAwesome.PENCIL_SQUARE_O);
 
-		VerticalLayout lay1 = new VerticalLayout(firstName, lastName, checkbox,
-				birthDate, lieuNaissance, countries);
+		VerticalLayout lay1 = new VerticalLayout(firstName, lastName, checkbox, birthDate, lieuNaissance, countries);
 		richText.setImmediate(true);
 		richText.setSizeFull();
 
@@ -141,18 +150,30 @@ public class AddClient extends FormLayout implements View {
 		VerticalLayout lay2 = new VerticalLayout(horizontalLayout, richText);
 		lay2.setMargin(new MarginInfo(false, false, false, true));
 		HorizontalLayout layout = new HorizontalLayout(lay1, lay2);
+		System.out.println("this is i=>" + this.getIdc());
+
+		if (this.getIdc() != 0) {
+			System.out.println("this is i=>" + this.getIdc());
+			Client client = daoService.get(Client.class, this.getIdc());
+			birthDate.setValue(client.getBirthdate());
+			firstName.setValue(client.getName());
+			lastName.setValue(client.getLastname());
+			countries.select(countriesList.get(client.getCountry().getIdcountry()-1));
+		}
 		addComponents(actions, layout);
+
 	}
 
 	private void fillCountries() {
-		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(
-				Country.class);
-		nations.addAll(daoService.getAll(Country.class));
+		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(Country.class);
+		nations.addAll(countriesList);
 		countries.setNullSelectionAllowed(false);
 		countries.setItemCaptionPropertyId("country");
 		countries.setInputPrompt("Nationality");
 		countries.setIcon(FontAwesome.BOOKMARK);
 		countries.setContainerDataSource(nations);
+
+		
 	}
 
 	private void fillSexe() {
@@ -163,7 +184,7 @@ public class AddClient extends FormLayout implements View {
 		checkbox.setRequired(true);
 		checkbox.setRequiredError("Vous devdez chisir un sexe");
 		checkbox.setContainerDataSource(sexes);
-		checkbox.select(sexList.get(1));
+
 	}
 
 	public void save(Button.ClickEvent event) throws CommitException {
@@ -176,25 +197,19 @@ public class AddClient extends FormLayout implements View {
 			System.out.println("inside save");
 			ClientsService service = new ClientManagement();
 			int c = ((Country) countries.getValue()).getIdcountry();
-			Message message = service.addClient("amine", firstName.getValue(),
-					lastName.getValue(), identity.getValue(),
-					lieuNaissance.getValue(), birthDate.getValue(),
-					((Sexe) checkbox.getValue()).getIdsexe(), c,
-					phone.getValue(), phone.getValue(), adress.getValue(),
-					richText.getValue());
+			Message message = service.addClient("amine", firstName.getValue(), lastName.getValue(), identity.getValue(),
+					lieuNaissance.getValue(), birthDate.getValue(), ((Sexe) checkbox.getValue()).getIdsexe(), c,
+					phone.getValue(), phone.getValue(), adress.getValue(), richText.getValue());
 			Notification.show(message.getMessage(), Type.HUMANIZED_MESSAGE);
 			getUI().getNavigator().addView(ClientView.NAME, ClientView.class);
-			getUI().getNavigator().navigateTo(
-					ClientView.NAME + "/" + message.getIdClient());
+			getUI().getNavigator().navigateTo(ClientView.NAME + "/" + message.getIdClient());
 		} else {
-			Notification.show("Erreur", "Vous devez remplir les champs",
-					Type.ERROR_MESSAGE);
+			Notification.show("Erreur", "Vous devez remplir les champs", Type.ERROR_MESSAGE);
 		}
 	}
 
 	public Boolean validate() {
-		if (firstName.getValue().trim().isEmpty()
-				|| lastName.getValue().trim().isEmpty()
+		if (firstName.getValue().trim().isEmpty() || lastName.getValue().trim().isEmpty()
 				|| countries.getValue().equals(null)) {
 			return false;
 		}
@@ -202,14 +217,12 @@ public class AddClient extends FormLayout implements View {
 	}
 
 	public void configureComponent() {
-		firstName
-				.setDescription("Veuillez saisir le nom du client");
+		firstName.setDescription("Veuillez saisir le nom du client");
 		firstName.setRequired(true);
 		firstName.setRequiredError("Vous devez saisir ce champs");
 		lastName.setRequired(true);
 		lastName.setRequiredError("Vous devez saisir ce champs");
-		email.addValidator(new EmailValidator(
-				"Vous devez saisir une adresse email valide"));
+		email.addValidator(new EmailValidator("Vous devez saisir une adresse email valide"));
 	}
 
 	public void cancel(Button.ClickEvent event) {
@@ -296,6 +309,14 @@ public class AddClient extends FormLayout implements View {
 
 	public void setCountries(ComboBox countries) {
 		this.countries = countries;
+	}
+
+	public int getIdc() {
+		return idc;
+	}
+
+	public void setIdc(int idc) {
+		this.idc = idc;
 	}
 
 }
