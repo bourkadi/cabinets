@@ -67,6 +67,7 @@ public class AddClient extends FormLayout implements View {
 	public static final String URL = "client/add";
 
 	private List<Country> countriesList = daoService.getAll(Country.class);
+	private List<Sexe> sexList = daoService.getAll(Sexe.class);
 
 	public AddClient() {
 		super();
@@ -158,7 +159,13 @@ public class AddClient extends FormLayout implements View {
 			birthDate.setValue(client.getBirthdate());
 			firstName.setValue(client.getName());
 			lastName.setValue(client.getLastname());
-			countries.select(countriesList.get(client.getCountry().getIdcountry()-1));
+			countries.select(countriesList.get(client.getCountry().getIdcountry() - 1));
+			checkbox.select(sexList.get(client.getSexe().getIdsexe() - 1));
+			phone.setValue(client.getPhone());
+			richText.setValue(client.getNote());
+			identity.setValue(client.getIdentityNumber());
+			adress.setValue(client.getAdress());
+			lieuNaissance.setValue(client.getBirthplace());
 		}
 		addComponents(actions, layout);
 
@@ -173,11 +180,10 @@ public class AddClient extends FormLayout implements View {
 		countries.setIcon(FontAwesome.BOOKMARK);
 		countries.setContainerDataSource(nations);
 
-		
 	}
 
 	private void fillSexe() {
-		List<Sexe> sexList = daoService.getAll(Sexe.class);
+		// List<Sexe> sexList = daoService.getAll(Sexe.class);
 		BeanItemContainer<Sexe> sexes = new BeanItemContainer<Sexe>(Sexe.class);
 		sexes.addAll(sexList);
 		checkbox.setItemCaptionPropertyId("sexe");
@@ -197,9 +203,19 @@ public class AddClient extends FormLayout implements View {
 			System.out.println("inside save");
 			ClientsService service = new ClientManagement();
 			int c = ((Country) countries.getValue()).getIdcountry();
-			Message message = service.addClient("amine", firstName.getValue(), lastName.getValue(), identity.getValue(),
-					lieuNaissance.getValue(), birthDate.getValue(), ((Sexe) checkbox.getValue()).getIdsexe(), c,
-					phone.getValue(), phone.getValue(), adress.getValue(), richText.getValue());
+			Message message = null;
+			if (this.getIdc() != 0) {
+				message = service.updateClient("amine", this.getIdc(), firstName.getValue(), lastName.getValue(),
+						identity.getValue(), lieuNaissance.getValue(), birthDate.getValue(),
+						((Sexe) checkbox.getValue()).getIdsexe(), c, phone.getValue(), phone.getValue(),
+						adress.getValue(), richText.getValue());
+
+	
+			} else {
+				message = service.addClient("amine", firstName.getValue(), lastName.getValue(), identity.getValue(),
+						lieuNaissance.getValue(), birthDate.getValue(), ((Sexe) checkbox.getValue()).getIdsexe(), c,
+						phone.getValue(), phone.getValue(), adress.getValue(), richText.getValue());
+			}
 			Notification.show(message.getMessage(), Type.HUMANIZED_MESSAGE);
 			getUI().getNavigator().addView(ClientView.NAME, ClientView.class);
 			getUI().getNavigator().navigateTo(ClientView.NAME + "/" + message.getIdClient());

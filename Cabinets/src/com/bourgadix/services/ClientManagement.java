@@ -64,9 +64,49 @@ public class ClientManagement implements ClientsService {
 	}
 
 	@Override
-	public void updateClient() {
-		// TODO Auto-generated method stub
+	public Message updateClient(String us,int cl, String name, String lastname, String identity, String birthplace,
+			Date birthdate, int s, int c, String ph, String phf, String addr, String note) {
+		Message message = new Message();
+		User user = (User) dao.getByProperty(User.class, "username", us).get(0);
+		if (!access.canUpdateClient(user.getIdUser())) {
+			message.setMessage("You are not authorized to perform this action");
+			message.setValue(false);
+			return message;
+		} else {
+			if (!isExisted(identity)) {
+				Client client = dao.get(Client.class, cl);
+				client.setUsers(user);
+				client.setAdress(addr);
+				client.setBirthdate(birthdate);
+				client.setBirthplace(birthplace);
+				client.setCountry(dao.get(Country.class, c));
+				client.setIdentityNumber(identity);
+				client.setLastname(lastname);
+				client.setName(name);
+				client.setSexe(dao.get(Sexe.class, s));
+				client.setNote(note);
+				client.setPhone(ph);
+				client.setPhonefix(phf);
 
+				client.setCreatedDate(dateToUnixTimestamp(new Date()));
+				dao.update(client);
+
+				logger.log(VERBOSE, "Client " + name + " add with success");
+
+				message.setMessage("Client " + name + " add with success");
+				message.setValue(true);
+				message.setIdClient(client.getIdclient());
+				System.out.println("ID CLIENT HERE!=>" + message.getIdClient());
+				return message;
+
+			} else {
+				logger.log(VERBOSE, "Client " + name + " already exist");
+
+				message.setMessage("Client " + name + " already exist");
+				message.setValue(false);
+				return message;
+			}
+		}
 	}
 
 	public Boolean isExisted(String identity) {

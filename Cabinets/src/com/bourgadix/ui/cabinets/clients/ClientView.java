@@ -21,26 +21,19 @@ import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
 import com.bourgadix.ui.cabinets.rdv.RdvForm;
 import com.bourgadix.ui.cabinets.rdv.RdvView;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -62,6 +55,7 @@ public class ClientView extends FormLayout implements View {
 	private TabSheet sheet = new TabSheet();
 	private int idc = 0;
 	private DaoService daoService = new Dao();
+	private AddClient addClient;
 
 	public ClientView() {
 		super();
@@ -84,8 +78,7 @@ public class ClientView extends FormLayout implements View {
 		client = daoService.get(Client.class, i);
 
 		prepareClient(client);
-		AddClient addClient=new AddClient(i);
-		addComponent(addClient);
+
 	}
 
 	public HorizontalLayout horizentalActionMenu() {
@@ -104,14 +97,25 @@ public class ClientView extends FormLayout implements View {
 				window.setModal(true);
 				RdvForm content = new RdvForm();
 				content.setClient(getClient());
-				System.out.println("This is the client=>"
-						+ getClient().getName());
+				System.out.println("This is the client=>" + getClient().getName());
 				window.setContent(content);
 				window.setWidth(700, UNITS_PIXELS);
 				UI.getCurrent().addWindow(window);
 			}
 		});
+		Button editButton = new Button("Modifier");
+		button.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		button.setIcon(FontAwesome.EDIT);
+		editButton.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				addClient.setEnabled(true);
+			}
+		});
 		horizontalLayout.addComponent(button);
+		horizontalLayout.addComponent(editButton);
 
 		return horizontalLayout;
 	}
@@ -133,69 +137,73 @@ public class ClientView extends FormLayout implements View {
 	}
 
 	public HorizontalLayout info() {
-		TextField firstName = new TextField("Prénom");
-		TextField lastName = new TextField("Nom");
-		TextField phone = new TextField("Téléphone");
-		TextField email = new TextField("Email");
-		DateField birthDate = new PopupDateField("Date de naissance");
-		ComboBox countries = new ComboBox("Nationalité");
-		TextField identity = new TextField("Pièce d'identité");
-		TextArea richText = new TextArea("Notes");
-		OptionGroup checkbox = new OptionGroup("Sexe");
-		TextField lieuNaissance = new TextField("Lieu de naissance");
-		TextArea adress = new TextArea("Adresse");
-
-		birthDate.setShowISOWeekNumbers(true);
-		birthDate.setValue(client.getBirthdate());
-		
-
-		checkbox.setIcon(FontAwesome.CHILD);
-
-		birthDate.setIcon(FontAwesome.CALENDAR);
-		email.setIcon(FontAwesome.SEND);
-
-		phone.setIcon(FontAwesome.PHONE);
-		firstName.setIcon(FontAwesome.PENCIL_SQUARE);
-		firstName.setValue(client.getName());
-
-		lastName.setIcon(FontAwesome.PENCIL_SQUARE_O);
-		lastName.setValue(client.getLastname());
-
-
-		email.addValidator(new EmailValidator(
-				"Vous devez saisir une adresse email valide"));
-		countries=fillCountries();
-
-
-		VerticalLayout lay1 = new VerticalLayout(firstName, lastName, checkbox,
-				birthDate, lieuNaissance, countries);
-		richText.setImmediate(true);
-		richText.setSizeFull();
-
-		VerticalLayout vlay = new VerticalLayout(email, phone, identity);
-		HorizontalLayout horizontalLayout = new HorizontalLayout(vlay, adress);
-		vlay.setMargin(new MarginInfo(false, true, false, false));
-		VerticalLayout lay2 = new VerticalLayout(horizontalLayout, richText);
-		lay2.setMargin(new MarginInfo(false, false, false, true));
-		HorizontalLayout layout = new HorizontalLayout(lay1, lay2);
+		/*
+		 * TextField firstName = new TextField("Prénom"); TextField lastName =
+		 * new TextField("Nom"); TextField phone = new TextField("Téléphone");
+		 * TextField email = new TextField("Email"); DateField birthDate = new
+		 * PopupDateField("Date de naissance"); ComboBox countries = new
+		 * ComboBox("Nationalité"); TextField identity = new TextField(
+		 * "Pièce d'identité"); TextArea richText = new TextArea("Notes");
+		 * OptionGroup checkbox = new OptionGroup("Sexe"); TextField
+		 * lieuNaissance = new TextField("Lieu de naissance"); TextArea adress =
+		 * new TextArea("Adresse");
+		 * 
+		 * birthDate.setShowISOWeekNumbers(true);
+		 * birthDate.setValue(client.getBirthdate());
+		 * 
+		 * 
+		 * checkbox.setIcon(FontAwesome.CHILD);
+		 * 
+		 * birthDate.setIcon(FontAwesome.CALENDAR);
+		 * email.setIcon(FontAwesome.SEND);
+		 * 
+		 * phone.setIcon(FontAwesome.PHONE);
+		 * firstName.setIcon(FontAwesome.PENCIL_SQUARE);
+		 * firstName.setValue(client.getName());
+		 * 
+		 * lastName.setIcon(FontAwesome.PENCIL_SQUARE_O);
+		 * lastName.setValue(client.getLastname());
+		 * 
+		 * 
+		 * email.addValidator(new EmailValidator(
+		 * "Vous devez saisir une adresse email valide"));
+		 * countries=fillCountries();
+		 * 
+		 * 
+		 * VerticalLayout lay1 = new VerticalLayout(firstName, lastName,
+		 * checkbox, birthDate, lieuNaissance, countries);
+		 * richText.setImmediate(true); richText.setSizeFull();
+		 * 
+		 * VerticalLayout vlay = new VerticalLayout(email, phone, identity);
+		 * HorizontalLayout horizontalLayout = new HorizontalLayout(vlay,
+		 * adress); vlay.setMargin(new MarginInfo(false, true, false, false));
+		 * VerticalLayout lay2 = new VerticalLayout(horizontalLayout, richText);
+		 * lay2.setMargin(new MarginInfo(false, false, false, true));
+		 */
+		 addClient = new AddClient(client.getIdclient());
+		addComponent(addClient);
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.addComponent(addClient);
 		layout.setMargin(true);
+		addClient.setEnabled(false);
 		return layout;
 	}
+
 	private ComboBox fillCountries() {
 		ComboBox countries = new ComboBox("Nationalité");
 		countries.setImmediate(true);
-		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(
-				Country.class);
+		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(Country.class);
 		nations.addAll(daoService.getAll(Country.class));
 		countries.setNullSelectionAllowed(true);
 		countries.setItemCaptionPropertyId("country");
-	//	countries.setInputPrompt("Nationality");
+		// countries.setInputPrompt("Nationality");
 		countries.setIcon(FontAwesome.BOOKMARK);
 		countries.select(nations.getItem(10));
 		countries.setContainerDataSource(nations);
-		
+
 		return countries;
 	}
+
 	public VerticalLayout visitHistory(int id) {
 		VisitsService service = new VisitManagement();
 
@@ -205,8 +213,8 @@ public class ClientView extends FormLayout implements View {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
 		for (Visit visit : list) {
 
-			Label label = new Label(sdf.format(visit.getDateVisitTime())
-					+ " : " + visit.getStatusVisit().getStatusVisit());
+			Label label = new Label(
+					sdf.format(visit.getDateVisitTime()) + " : " + visit.getStatusVisit().getStatusVisit());
 			verticalLayout.addComponent(label);
 		}
 		return verticalLayout;
@@ -251,8 +259,7 @@ public class ClientView extends FormLayout implements View {
 			private static final long serialVersionUID = 862508712735459561L;
 
 			public void eventClick(EventClick event) {
-				MyCustomBasicEvent e = (MyCustomBasicEvent) event
-						.getCalendarEvent();
+				MyCustomBasicEvent e = (MyCustomBasicEvent) event.getCalendarEvent();
 
 				// Do something with it
 
@@ -300,5 +307,13 @@ public class ClientView extends FormLayout implements View {
 
 	public void setIdc(int idc) {
 		this.idc = idc;
+	}
+
+	public AddClient getAddClient() {
+		return addClient;
+	}
+
+	public void setAddClient(AddClient addClient) {
+		this.addClient = addClient;
 	}
 }

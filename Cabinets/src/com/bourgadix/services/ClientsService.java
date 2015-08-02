@@ -10,7 +10,8 @@ public interface ClientsService {
 			String birthplace, Date birthdate, int s, int c, String ph,
 			String phf, String addr, String note);
 
-	public void updateClient();
+	public Message updateClient(String us,int cl, String name, String lastname, String identity, String birthplace,
+			Date birthdate, int s, int c, String ph, String phf, String addr, String note) ;
 
 	public Boolean isExisted(String identity);
 }
