@@ -19,5 +19,8 @@ public interface DaoService {
 	public List<Visit> getActifVisits(Integer a, Integer b);
 	
 	public List<Visit> getVisitsOfClient(int c,Integer a, Integer b);
+	
+	public List<Sexe> getSexeList();
+	public List<Country> getCountriesList();
 
 }

@@ -38,8 +38,7 @@ public class EventsOfUserProvider implements CalendarEventProvider {
 			event.setStart(visit.getDateVisitTime());
 			event.setDescription(visit.getNote());
 		
-			event.setCaption("Un RDV avec Mr:"
-					+ visit.getClient().getLastname());
+			event.setCaption(visit.getClient().getLastname());
 			DateTime dateTime = new DateTime(visit.getDateVisitTime());
 			DateTime plusPeriod = dateTime.plus(Period.hours(2));
 			event.setEnd(plusPeriod.toDate());

@@ -66,8 +66,8 @@ public class AddClient extends FormLayout implements View {
 	public static final String NAME = "Ajouter un client";
 	public static final String URL = "client/add";
 
-	private List<Country> countriesList = daoService.getAll(Country.class);
-	private List<Sexe> sexList = daoService.getAll(Sexe.class);
+	private List<Country> countriesList = daoService.getCountriesList();
+	private List<Sexe> sexList = daoService.getSexeList();
 
 	public AddClient() {
 		super();
@@ -124,6 +124,8 @@ public class AddClient extends FormLayout implements View {
 
 	private void buildLayout() {
 		// setSizeUndefined();
+	
+
 		setSizeFull();
 		setMargin(true);
 		configureComponent();
@@ -154,13 +156,18 @@ public class AddClient extends FormLayout implements View {
 		System.out.println("this is i=>" + this.getIdc());
 
 		if (this.getIdc() != 0) {
+	
+			
 			System.out.println("this is i=>" + this.getIdc());
 			Client client = daoService.get(Client.class, this.getIdc());
+			
+			
 			birthDate.setValue(client.getBirthdate());
 			firstName.setValue(client.getName());
 			lastName.setValue(client.getLastname());
-			countries.select(countriesList.get(client.getCountry().getIdcountry() - 1));
-			checkbox.select(sexList.get(client.getSexe().getIdsexe() - 1));
+			countries.select(countriesList.get(client.getCountry().getIdcountry()-1));
+			checkbox.select(sexList.get(client.getSexe().getIdsexe()-1));
+			checkbox.select(client.getSexe());
 			phone.setValue(client.getPhone());
 			richText.setValue(client.getNote());
 			identity.setValue(client.getIdentityNumber());

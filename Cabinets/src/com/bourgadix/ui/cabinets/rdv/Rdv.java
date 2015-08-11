@@ -54,9 +54,9 @@ public class Rdv extends CssLayout implements View {
 	public static final String URL = "RDV";
 
 	private Button monthlyView = new Button("Par mois");
-	private Button addVisitButton = new Button("Ajouter une visite");
 	private DaoService daoService = new Dao();
 
+	
 	void monthlyview(Layout layout) {
 		// BEGIN-EXAMPLE: calendar.monthlyview
 		// Create the calendar
@@ -120,7 +120,7 @@ public class Rdv extends CssLayout implements View {
 		setSizeUndefined();
 		// Create the calendar
 		String user=CurrentUser.get();
-		Notification.show("This is the user>"+user);
+		
 		final Calendar calendar = new Calendar(new MyEventProvider());
 		calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
 		calendar.setLocale(new Locale("fr", "FR"));
@@ -163,18 +163,8 @@ public class Rdv extends CssLayout implements View {
 
 			}
 		});
-		addVisitButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		addVisitButton.setIcon(FontAwesome.CLOCK_O);
-		addVisitButton.addClickListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				showVisitsForm();
-			}
-		});
-		HorizontalLayout horizontalLayout = new HorizontalLayout(monthlyView,
-				addVisitButton);
+	
+		HorizontalLayout horizontalLayout = new HorizontalLayout(monthlyView);
 
 		VerticalLayout verticalLayout = new VerticalLayout(horizontalLayout,
 				calendar);

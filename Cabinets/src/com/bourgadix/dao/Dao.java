@@ -28,17 +28,14 @@ public class Dao implements DaoService, Serializable {
 
 		try {
 			trns = session.beginTransaction();
-			logger.log(VERBOSE, "Trying to save object from "
-					+ o.getClass().getCanonicalName());
+			logger.log(VERBOSE, "Trying to save object from " + o.getClass().getCanonicalName());
 			session.saveOrUpdate(o);
 			session.getTransaction().commit();
-			logger.log(VERBOSE, "Object saved from "
-					+ o.getClass().getCanonicalName());
+			logger.log(VERBOSE, "Object saved from " + o.getClass().getCanonicalName());
 
 		} catch (RuntimeException e1) {
 			if (trns != null) {
-				logger.log(VERBOSE, "Object failed to be save of "
-						+ o.getClass().getCanonicalName());
+				logger.log(VERBOSE, "Object failed to be save of " + o.getClass().getCanonicalName());
 
 				trns.rollback();
 			}
@@ -56,17 +53,14 @@ public class Dao implements DaoService, Serializable {
 
 		try {
 			trns = session.beginTransaction();
-			logger.log(VERBOSE, "Trying to save object from "
-					+ o.getClass().getCanonicalName());
+			logger.log(VERBOSE, "Trying to save object from " + o.getClass().getCanonicalName());
 			session.update(o);
 			session.getTransaction().commit();
-			logger.log(VERBOSE, "Object saved from "
-					+ o.getClass().getCanonicalName());
+			logger.log(VERBOSE, "Object saved from " + o.getClass().getCanonicalName());
 
 		} catch (RuntimeException e1) {
 			if (trns != null) {
-				logger.log(VERBOSE, "Object failed to be save of "
-						+ o.getClass().getCanonicalName());
+				logger.log(VERBOSE, "Object failed to be save of " + o.getClass().getCanonicalName());
 
 				trns.rollback();
 			}
@@ -87,8 +81,7 @@ public class Dao implements DaoService, Serializable {
 		try {
 
 			list = crit.list();
-			logger.log(VERBOSE, "Fetching objects from "
-					+ type.getClass().getCanonicalName());
+			logger.log(VERBOSE, "Fetching objects from " + type.getClass().getCanonicalName());
 			trns.commit();
 		} catch (RuntimeException e1) {
 
@@ -105,22 +98,19 @@ public class Dao implements DaoService, Serializable {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		T t = null;
 		try {
-			logger.log(VERBOSE, "Trying to get object from "
-					+ type.getClass().getCanonicalName() + " with identifier "
-					+ id);
+			logger.log(VERBOSE,
+					"Trying to get object from " + type.getClass().getCanonicalName() + " with identifier " + id);
 
 			trns = session.beginTransaction();
 			t = (T) session.get(type, id);
 			session.getTransaction().commit();
-			logger.log(VERBOSE, "Object fetched with success from "
-					+ type.getClass().getCanonicalName() + " with identifier "
-					+ id);
+			logger.log(VERBOSE, "Object fetched with success from " + type.getClass().getCanonicalName()
+					+ " with identifier " + id);
 
 		} catch (RuntimeException e1) {
 			if (trns != null) {
-				logger.log(VERBOSE, "Failed to get object from "
-						+ type.getClass().getCanonicalName()
-						+ " with identifier " + id);
+				logger.log(VERBOSE,
+						"Failed to get object from " + type.getClass().getCanonicalName() + " with identifier " + id);
 
 				trns.rollback();
 			}
@@ -133,16 +123,14 @@ public class Dao implements DaoService, Serializable {
 
 	}
 
-	public <T> List<T> getByProperty(final Class<T> type, String propertyName,
-			Object value) {
+	public <T> List<T> getByProperty(final Class<T> type, String propertyName, Object value) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		List<T> list = null;
 		try {
 			final Criteria crit = session.createCriteria(type);
 			crit.add(Restrictions.eq(propertyName, value));
 			list = crit.list();
-			logger.log(VERBOSE, "Trying to get object from "
-					+ type.getClass().getCanonicalName() + " with property "
+			logger.log(VERBOSE, "Trying to get object from " + type.getClass().getCanonicalName() + " with property "
 					+ propertyName + " for the value " + value);
 		} catch (RuntimeException e1) {
 			e1.printStackTrace();
@@ -189,6 +177,45 @@ public class Dao implements DaoService, Serializable {
 				crit.addOrder(Order.asc("datevisit"));
 			}
 			crit.add(Restrictions.eq("client.idclient", c));
+			list = crit.list();
+		} catch (RuntimeException e1) {
+			e1.printStackTrace();
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sexe> getSexeList() {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		List<Sexe> list = null;
+		try {
+			final Criteria crit = session.createCriteria(Sexe.class);
+
+			crit.addOrder(Order.asc("idsexe"));
+
+			list = crit.list();
+		} catch (RuntimeException e1) {
+			e1.printStackTrace();
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return list;
+	}
+	@Override
+	public List<Country> getCountriesList() {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		List<Country> list = null;
+		try {
+			final Criteria crit = session.createCriteria(Country.class);
+
+			crit.addOrder(Order.asc("idcountry"));
+
 			list = crit.list();
 		} catch (RuntimeException e1) {
 			e1.printStackTrace();

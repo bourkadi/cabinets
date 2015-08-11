@@ -26,8 +26,8 @@ public class MyEventProvider implements CalendarEventProvider {
 	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
 		List<CalendarEvent> events = new ArrayList<CalendarEvent>();
 		DaoService daoService = new Dao();
-		startDate = new Date("01/05/2015");
-		endDate = new Date("07/05/2015");
+//		startDate = new Date("01/05/2015");
+//		endDate = new Date("07/05/2015");
 		System.out.println("this is startDate: " + startDate);
 		System.out.println("this is endDate:  " + endDate);
 
@@ -38,8 +38,7 @@ public class MyEventProvider implements CalendarEventProvider {
 			event.setStart(visit.getDateVisitTime());
 			event.setDescription(visit.getNote());
 		
-			event.setCaption("Un RDV avec Mr:"
-					+ visit.getClient().getLastname());
+			event.setCaption(visit.getClient().getLastname());
 			DateTime dateTime = new DateTime(visit.getDateVisitTime());
 			DateTime plusPeriod = dateTime.plus(Period.hours(2));
 			event.setEnd(plusPeriod.toDate());
