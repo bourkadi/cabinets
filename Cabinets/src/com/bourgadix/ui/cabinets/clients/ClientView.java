@@ -12,6 +12,7 @@ import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Country;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
+import com.bourgadix.ui.cabinets.prescription.Prescription;
 import com.bourgadix.dao.Visit;
 import com.bourgadix.services.VisitManagement;
 import com.bourgadix.services.VisitsService;
@@ -21,6 +22,7 @@ import com.bourgadix.ui.cabinets.rdv.MyCustomBasicEvent;
 import com.bourgadix.ui.cabinets.rdv.RdvForm;
 import com.bourgadix.ui.cabinets.rdv.RdvView;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -84,7 +86,7 @@ public class ClientView extends FormLayout implements View {
 	public HorizontalLayout horizentalActionMenu() {
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		Button button = new Button("Ajouter un RDV");
-		button.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		button.addStyleName(ValoTheme.BUTTON_QUIET);
 		button.setIcon(FontAwesome.CLOCK_O);
 		button.addClickListener(new ClickListener() {
 
@@ -103,19 +105,37 @@ public class ClientView extends FormLayout implements View {
 				UI.getCurrent().addWindow(window);
 			}
 		});
-		Button editButton = new Button("Modifier");
-		button.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		button.setIcon(FontAwesome.EDIT);
+		Button editButton = new Button("Modifier le client");
+		editButton.addStyleName(ValoTheme.BUTTON_QUIET);
+
+		editButton.setIcon(FontAwesome.EDIT);
 		editButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				addClient.setEnabled(true);
+				addClient.getCancel().setVisible(true);
+				addClient.getSave().setVisible(true);
+				;
+			}
+		});
+		Button addPrescription = new Button("Ajouter une ordonnance");
+		addPrescription.addStyleName(ValoTheme.BUTTON_QUIET);
+		addPrescription.setIcon(FontAwesome.MEDKIT);
+		addPrescription.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				Navigator navigator = getUI().getNavigator();
+				navigator.addView(Prescription.URL, Prescription.class);
+				navigator.navigateTo(Prescription.URL + "/" + client.getIdclient());
 			}
 		});
 		horizontalLayout.addComponent(button);
 		horizontalLayout.addComponent(editButton);
+		horizontalLayout.addComponent(addPrescription);
 
 		return horizontalLayout;
 	}
@@ -125,7 +145,7 @@ public class ClientView extends FormLayout implements View {
 		sheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
 		sheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
 
-		HorizontalLayout layout = info();
+		CssLayout layout = info();
 		sheet.addTab(layout, "Info", FontAwesome.INFO);
 		CssLayout layout1 = calendarOfClient(client.getIdclient());
 		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
@@ -136,57 +156,21 @@ public class ClientView extends FormLayout implements View {
 
 	}
 
-	public HorizontalLayout info() {
-		/*
-		 * TextField firstName = new TextField("Prénom"); TextField lastName =
-		 * new TextField("Nom"); TextField phone = new TextField("Téléphone");
-		 * TextField email = new TextField("Email"); DateField birthDate = new
-		 * PopupDateField("Date de naissance"); ComboBox countries = new
-		 * ComboBox("Nationalité"); TextField identity = new TextField(
-		 * "Pièce d'identité"); TextArea richText = new TextArea("Notes");
-		 * OptionGroup checkbox = new OptionGroup("Sexe"); TextField
-		 * lieuNaissance = new TextField("Lieu de naissance"); TextArea adress =
-		 * new TextArea("Adresse");
-		 * 
-		 * birthDate.setShowISOWeekNumbers(true);
-		 * birthDate.setValue(client.getBirthdate());
-		 * 
-		 * 
-		 * checkbox.setIcon(FontAwesome.CHILD);
-		 * 
-		 * birthDate.setIcon(FontAwesome.CALENDAR);
-		 * email.setIcon(FontAwesome.SEND);
-		 * 
-		 * phone.setIcon(FontAwesome.PHONE);
-		 * firstName.setIcon(FontAwesome.PENCIL_SQUARE);
-		 * firstName.setValue(client.getName());
-		 * 
-		 * lastName.setIcon(FontAwesome.PENCIL_SQUARE_O);
-		 * lastName.setValue(client.getLastname());
-		 * 
-		 * 
-		 * email.addValidator(new EmailValidator(
-		 * "Vous devez saisir une adresse email valide"));
-		 * countries=fillCountries();
-		 * 
-		 * 
-		 * VerticalLayout lay1 = new VerticalLayout(firstName, lastName,
-		 * checkbox, birthDate, lieuNaissance, countries);
-		 * richText.setImmediate(true); richText.setSizeFull();
-		 * 
-		 * VerticalLayout vlay = new VerticalLayout(email, phone, identity);
-		 * HorizontalLayout horizontalLayout = new HorizontalLayout(vlay,
-		 * adress); vlay.setMargin(new MarginInfo(false, true, false, false));
-		 * VerticalLayout lay2 = new VerticalLayout(horizontalLayout, richText);
-		 * lay2.setMargin(new MarginInfo(false, false, false, true));
-		 */
-		 addClient = new AddClient(client.getIdclient());
+	public CssLayout info() {
+		CssLayout cssLayout = new CssLayout();
+
+		addClient = new AddClient(client.getIdclient());
+		addClient.getCancel().setVisible(false);
+		addClient.getSave().setVisible(false);
 		addComponent(addClient);
 		HorizontalLayout layout = new HorizontalLayout();
+
 		layout.addComponent(addClient);
+		// layout.addComponent(editButton());
 		layout.setMargin(true);
 		addClient.setEnabled(false);
-		return layout;
+		cssLayout.addComponent(layout);
+		return cssLayout;
 	}
 
 	private ComboBox fillCountries() {

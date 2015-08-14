@@ -68,6 +68,8 @@ public class AddClient extends FormLayout implements View {
 
 	private List<Country> countriesList = daoService.getCountriesList();
 	private List<Sexe> sexList = daoService.getSexeList();
+	
+	
 
 	public AddClient() {
 		super();
@@ -131,6 +133,8 @@ public class AddClient extends FormLayout implements View {
 		configureComponent();
 		HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		actions.setSpacing(true);
+		
+		
 		birthDate.setShowISOWeekNumbers(true);
 
 		fillCountries();
@@ -178,6 +182,7 @@ public class AddClient extends FormLayout implements View {
 
 	}
 
+	
 	private void fillCountries() {
 		BeanItemContainer<Country> nations = new BeanItemContainer<Country>(Country.class);
 		nations.addAll(countriesList);
@@ -212,6 +217,7 @@ public class AddClient extends FormLayout implements View {
 			int c = ((Country) countries.getValue()).getIdcountry();
 			Message message = null;
 			if (this.getIdc() != 0) {
+			
 				message = service.updateClient("amine", this.getIdc(), firstName.getValue(), lastName.getValue(),
 						identity.getValue(), lieuNaissance.getValue(), birthDate.getValue(),
 						((Sexe) checkbox.getValue()).getIdsexe(), c, phone.getValue(), phone.getValue(),
