@@ -6,26 +6,29 @@ import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Medicament;
-import com.bourgadix.dao.TypeVisit;
-import com.bourgadix.services.VisitManagement;
-import com.bourgadix.services.VisitsService;
-import com.bourgadix.ui.cabinets.authentification.CurrentUser;
-import com.bourgadix.ui.cabinets.rdv.Rdv;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.navigator.Navigator;
+import com.vaadin.event.Action;
+import com.vaadin.event.Action.Container;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ClickableRenderer.RendererClickEvent;
+import com.vaadin.ui.renderers.ClickableRenderer.RendererClickListener;
+import com.vaadin.ui.renderers.ImageRenderer;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -41,11 +44,14 @@ public class Prescription extends FormLayout implements View {
 	private TextField description;
 	private DaoService daoService = new Dao();
 	private List<Medicament> medics = daoService.getAll(Medicament.class);
-	VerticalLayout verticalLayout = new VerticalLayout();
+	private VerticalLayout verticalLayout = new VerticalLayout();
+	private Grid grid = new Grid();
+	Tree sample = new Tree("Hardware Inventory");
 
 	public Prescription() {
 		super();
 		// TODO Auto-generated constructor stub
+		prepareGrid();
 		addComponent(prepareTreatmentForm());
 	}
 
@@ -88,9 +94,12 @@ public class Prescription extends FormLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
+			
 				String m = ((Medicament) medicamentsList.getValue()).getLabel();
 				String d = description.getValue();
-				verticalLayout.addComponent(prepareOneRow(m, d));
+				// verticalLayout.addComponent(prepareOneRow(m, d));
+				verticalLayout.addComponent(addToGrid(m, d));
+				verticalLayout.addComponent(addToTree(m, d));
 
 			}
 		});
@@ -118,7 +127,42 @@ public class Prescription extends FormLayout implements View {
 
 	public Label prepareOneRow(String medic, String desc) {
 		Label label = new Label("- " + medic + " : " + desc);
+
 		return label;
 	}
 
+	public Grid addToGrid(String medic, String desc) {
+
+		// grid.setSizeFull();
+
+		
+		grid.addRow(medic, desc,"Delete");
+		return grid;
+	}
+	public void prepareGrid(){
+		grid.addColumn("Medicament", String.class);
+
+		grid.addColumn("Description", String.class);
+
+		grid.addColumn("Delete", String.class).setRenderer(new ButtonRenderer(new RendererClickListener() {
+			@Override
+			public void click(RendererClickEvent e) {
+				Notification.show("Deleting item " + e.getItemId());
+			}
+		}));
+		Image image = new Image();
+		image.setSource(new ExternalResource("https://vaadin.com/vaadin-theme/images/vaadin/vaadin-logo-small.png"));
+ 
+ 
+
+	}
+	
+
+	public Tree addToTree(String medic, String desc) {
+       
+		sample.addItem(medic+":"+desc);
+		return sample;
+	}
+
+ 
 }
