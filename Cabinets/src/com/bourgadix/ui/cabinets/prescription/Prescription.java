@@ -18,6 +18,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -29,6 +30,7 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ClickableRenderer.RendererClickEvent;
 import com.vaadin.ui.renderers.ClickableRenderer.RendererClickListener;
 import com.vaadin.ui.renderers.ImageRenderer;
+import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -94,12 +96,12 @@ public class Prescription extends FormLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-			
+
 				String m = ((Medicament) medicamentsList.getValue()).getLabel();
 				String d = description.getValue();
-				// verticalLayout.addComponent(prepareOneRow(m, d));
-				verticalLayout.addComponent(addToGrid(m, d));
-				verticalLayout.addComponent(addToTree(m, d));
+				verticalLayout.addComponent(prepareOneRow(m, d));
+				// verticalLayout.addComponent(addToGrid(m, d));
+				// verticalLayout.addComponent(addToTree(m, d));
 
 			}
 		});
@@ -125,21 +127,23 @@ public class Prescription extends FormLayout implements View {
 		return clickListener;
 	}
 
-	public Label prepareOneRow(String medic, String desc) {
+	public HorizontalLayout prepareOneRow(String medic, String desc) {
 		Label label = new Label("- " + medic + " : " + desc);
-
-		return label;
+		Button removeMedic = new Button("Enlever",FontAwesome.MINUS);
+		removeMedic.addStyleName(ValoTheme.BUTTON_LINK);
+		HorizontalLayout horizontalLayout = new HorizontalLayout(label, removeMedic);
+		return horizontalLayout;
 	}
 
 	public Grid addToGrid(String medic, String desc) {
 
 		// grid.setSizeFull();
 
-		
-		grid.addRow(medic, desc,"Delete");
+		grid.addRow(medic, desc, "Delete");
 		return grid;
 	}
-	public void prepareGrid(){
+
+	public void prepareGrid() {
 		grid.addColumn("Medicament", String.class);
 
 		grid.addColumn("Description", String.class);
@@ -152,17 +156,13 @@ public class Prescription extends FormLayout implements View {
 		}));
 		Image image = new Image();
 		image.setSource(new ExternalResource("https://vaadin.com/vaadin-theme/images/vaadin/vaadin-logo-small.png"));
- 
- 
 
 	}
-	
 
 	public Tree addToTree(String medic, String desc) {
-       
-		sample.addItem(medic+":"+desc);
+
+		sample.addItem(medic + ":" + desc);
 		return sample;
 	}
 
- 
 }
