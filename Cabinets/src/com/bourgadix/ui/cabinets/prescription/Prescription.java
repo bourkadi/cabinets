@@ -1,11 +1,14 @@
 package com.bourgadix.ui.cabinets.prescription;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Medicament;
+import com.bourgadix.dao.Treatment;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Container;
@@ -47,13 +50,11 @@ public class Prescription extends FormLayout implements View {
 	private DaoService daoService = new Dao();
 	private List<Medicament> medics = daoService.getAll(Medicament.class);
 	private VerticalLayout verticalLayout = new VerticalLayout();
-	private Grid grid = new Grid();
-	Tree sample = new Tree("Hardware Inventory");
+	private Set<Treatment> treatments = new HashSet<Treatment>(0);
 
 	public Prescription() {
 		super();
 		// TODO Auto-generated constructor stub
-		prepareGrid();
 		addComponent(prepareTreatmentForm());
 	}
 
@@ -97,11 +98,10 @@ public class Prescription extends FormLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 
-				String m = ((Medicament) medicamentsList.getValue()).getLabel();
+				// String m = ((Medicament)
+				// medicamentsList.getValue()).getLabel();
 				String d = description.getValue();
-				verticalLayout.addComponent(prepareOneRow(m, d));
-				// verticalLayout.addComponent(addToGrid(m, d));
-				// verticalLayout.addComponent(addToTree(m, d));
+				verticalLayout.addComponent(prepareOneRow((Medicament) medicamentsList.getValue(), d));
 
 			}
 		});
@@ -129,40 +129,40 @@ public class Prescription extends FormLayout implements View {
 
 	public HorizontalLayout prepareOneRow(String medic, String desc) {
 		Label label = new Label("- " + medic + " : " + desc);
-		Button removeMedic = new Button("Enlever",FontAwesome.MINUS);
+		Button removeMedic = new Button("Enlever", FontAwesome.MINUS);
 		removeMedic.addStyleName(ValoTheme.BUTTON_LINK);
 		HorizontalLayout horizontalLayout = new HorizontalLayout(label, removeMedic);
 		return horizontalLayout;
 	}
 
-	public Grid addToGrid(String medic, String desc) {
-
-		// grid.setSizeFull();
-
-		grid.addRow(medic, desc, "Delete");
-		return grid;
+	public HorizontalLayout prepareOneRow(Medicament medic, String desc) {
+		Label label = new Label("- " + medic.getLabel() + " : " + desc);
+		Button removeMedic = new Button("Enlever", FontAwesome.MINUS);
+		removeMedic.addStyleName(ValoTheme.BUTTON_LINK);
+		HorizontalLayout horizontalLayout = new HorizontalLayout(label, removeMedic);
+		Treatment treatment = new Treatment();
+		treatment.setDescription(desc);
+		treatment.setMedicament(medic);
+		treatments.add(treatment);
+		removeMedic.addClickListener(removeRow(horizontalLayout, treatment));
+		return horizontalLayout;
 	}
 
-	public void prepareGrid() {
-		grid.addColumn("Medicament", String.class);
+	public ClickListener removeRow(final HorizontalLayout horizontalLayout, final Treatment treatment) {
+		ClickListener clickListener = new ClickListener() {
 
-		grid.addColumn("Description", String.class);
-
-		grid.addColumn("Delete", String.class).setRenderer(new ButtonRenderer(new RendererClickListener() {
 			@Override
-			public void click(RendererClickEvent e) {
-				Notification.show("Deleting item " + e.getItemId());
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				Notification.show("detach");
+				treatments.remove(treatment);
+				horizontalLayout.setVisible(false);
+				for (Treatment component : treatments) {
+					System.out.println(component.getMedicament().getLabel());
+				}
 			}
-		}));
-		Image image = new Image();
-		image.setSource(new ExternalResource("https://vaadin.com/vaadin-theme/images/vaadin/vaadin-logo-small.png"));
-
-	}
-
-	public Tree addToTree(String medic, String desc) {
-
-		sample.addItem(medic + ":" + desc);
-		return sample;
+		};
+		return clickListener;
 	}
 
 }
