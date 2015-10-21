@@ -1,5 +1,6 @@
 package com.bourgadix.ui.cabinets.prescription;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,9 @@ import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Medicament;
 import com.bourgadix.dao.Treatment;
+import com.bourgadix.services.PrescriptionManagement;
+import com.bourgadix.services.PrescriptionService;
+import com.bourgadix.ui.cabinets.authentification.CurrentUser;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Container;
@@ -51,6 +55,7 @@ public class Prescription extends FormLayout implements View {
 	private List<Medicament> medics = daoService.getAll(Medicament.class);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 	private Set<Treatment> treatments = new HashSet<Treatment>(0);
+	private Button save = new Button("Enregistrer", FontAwesome.SAVE);
 
 	public Prescription() {
 		super();
@@ -86,6 +91,8 @@ public class Prescription extends FormLayout implements View {
 	public VerticalLayout prepareTreatmentForm() {
 
 		VerticalLayout layout = new VerticalLayout();
+		save.addClickListener(savePrescription());
+		layout.addComponent(save);
 		layout.addComponent(prepareMedicamentsList());
 		description = new TextField("Consigne d'utilisation");
 		layout.addComponent(description);
@@ -110,6 +117,25 @@ public class Prescription extends FormLayout implements View {
 		return layout;
 	}
 
+	public ClickListener savePrescription() {
+		ClickListener clickListener = new ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4850422094911357361L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				PrescriptionService prescriptionService = new PrescriptionManagement();
+				//getClass().prescriptionService.addPrescription(treatments, new Date(), client, user);
+				String name=CurrentUser.get();
+				Notification.show(name);
+			}
+		};
+		return clickListener;
+	}
+
 	public ClickListener addTreatment(final Medicament medicament, final String description) {
 		ClickListener clickListener = new ClickListener() {
 
@@ -122,6 +148,7 @@ public class Prescription extends FormLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				verticalLayout.addComponent(prepareOneRow(medicament.getLabel(), description));
+
 			}
 		};
 		return clickListener;
