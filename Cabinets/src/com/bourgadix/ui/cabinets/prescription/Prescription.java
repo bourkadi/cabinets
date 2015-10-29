@@ -10,6 +10,7 @@ import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Medicament;
 import com.bourgadix.dao.Treatment;
+import com.bourgadix.dao.User;
 import com.bourgadix.services.PrescriptionManagement;
 import com.bourgadix.services.PrescriptionService;
 import com.bourgadix.ui.cabinets.authentification.CurrentUser;
@@ -56,6 +57,7 @@ public class Prescription extends FormLayout implements View {
 	private VerticalLayout verticalLayout = new VerticalLayout();
 	private Set<Treatment> treatments = new HashSet<Treatment>(0);
 	private Button save = new Button("Enregistrer", FontAwesome.SAVE);
+	private final PrescriptionService prescriptionService=new PrescriptionManagement();
 
 	public Prescription() {
 		super();
@@ -130,7 +132,8 @@ public class Prescription extends FormLayout implements View {
 				PrescriptionService prescriptionService = new PrescriptionManagement();
 				//getClass().prescriptionService.addPrescription(treatments, new Date(), client, user);
 				String name=CurrentUser.get();
-				Notification.show(name);
+				User user=daoService.getByProperty(User.class, "username", name).get(0); 
+				prescriptionService.addPrescription(treatments, new Date(), client, user);
 			}
 		};
 		return clickListener;
