@@ -15,29 +15,18 @@ import com.bourgadix.services.PrescriptionManagement;
 import com.bourgadix.services.PrescriptionService;
 import com.bourgadix.ui.cabinets.authentification.CurrentUser;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.Action;
-import com.vaadin.event.Action.Container;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.renderers.ButtonRenderer;
-import com.vaadin.ui.renderers.ClickableRenderer.RendererClickEvent;
-import com.vaadin.ui.renderers.ClickableRenderer.RendererClickListener;
-import com.vaadin.ui.renderers.ImageRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -56,8 +45,8 @@ public class Prescription extends FormLayout implements View {
 	private List<Medicament> medics = daoService.getAll(Medicament.class);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 	private Set<Treatment> treatments = new HashSet<Treatment>(0);
-	private Button save = new Button("Enregistrer", FontAwesome.SAVE);
-	private final PrescriptionService prescriptionService=new PrescriptionManagement();
+	private Button save = new Button("Sauvegarder l'ordonnance ", FontAwesome.SAVE);
+	
 
 	public Prescription() {
 		super();
