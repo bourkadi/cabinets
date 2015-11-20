@@ -34,6 +34,5 @@
 			<attribute name="javadoc_location" value="jar:file:/home/bourkadix/.ivy2/cache/com.vaadin/vaadin-server/javadocs/vaadin-server-7.4.7-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/bourkadix/Bureau/grid-renderers-collection-addon-1.0-SNAPSHOT/grid-renderers-collection-addon-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

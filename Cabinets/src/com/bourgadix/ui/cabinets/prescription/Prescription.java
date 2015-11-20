@@ -36,7 +36,7 @@ public class Prescription extends FormLayout implements View {
 	 * 
 	 */
 	private static final long serialVersionUID = -6274336954264799400L;
-	public static final String NAME = "Ajouter une ordonnance";
+	public static final String NAME = "Ajouter une ordonnance plz";
 	public static final String URL = "prescription/add";
 	private Client client;
 	private ComboBox medicamentsList;
@@ -46,7 +46,7 @@ public class Prescription extends FormLayout implements View {
 	private VerticalLayout verticalLayout = new VerticalLayout();
 	private Set<Treatment> treatments = new HashSet<Treatment>(0);
 	private Button save = new Button("Sauvegarder l'ordonnance ", FontAwesome.SAVE);
-	
+	private final PrescriptionService prescriptionService = new PrescriptionManagement();
 
 	public Prescription() {
 		super();
@@ -118,10 +118,10 @@ public class Prescription extends FormLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				PrescriptionService prescriptionService = new PrescriptionManagement();
-				//getClass().prescriptionService.addPrescription(treatments, new Date(), client, user);
-				String name=CurrentUser.get();
-				User user=daoService.getByProperty(User.class, "username", name).get(0); 
+				// getClass().prescriptionService.addPrescription(treatments,
+				// new Date(), client, user);
+				String name = CurrentUser.get();
+				User user = daoService.getByProperty(User.class, "username", name).get(0);
 				prescriptionService.addPrescription(treatments, new Date(), client, user);
 			}
 		};
