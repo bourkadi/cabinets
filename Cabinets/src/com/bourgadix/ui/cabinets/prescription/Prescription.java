@@ -25,8 +25,11 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -47,6 +50,8 @@ public class Prescription extends FormLayout implements View {
 	private Set<Treatment> treatments = new HashSet<Treatment>(0);
 	private Button save = new Button("Sauvegarder l'ordonnance ", FontAwesome.SAVE);
 	private final PrescriptionService prescriptionService = new PrescriptionManagement();
+	private RichTextArea richTextArea = new RichTextArea("Notes");
+	private com.bourgadix.dao.Prescription prescription = null;
 
 	public Prescription() {
 		super();
@@ -82,13 +87,19 @@ public class Prescription extends FormLayout implements View {
 	public VerticalLayout prepareTreatmentForm() {
 
 		VerticalLayout layout = new VerticalLayout();
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		Button addtreatment = new Button("Ajouter un élement", FontAwesome.PLUS_SQUARE);
+
+		description = new TextField("Consigne d'utilisation");
 		save.addClickListener(savePrescription());
 		layout.addComponent(save);
-		layout.addComponent(prepareMedicamentsList());
-		description = new TextField("Consigne d'utilisation");
-		layout.addComponent(description);
+		horizontalLayout.addComponent(prepareMedicamentsList());
+		horizontalLayout.addComponent(description);
+		horizontalLayout.addComponent(addtreatment);
+
+		layout.addComponent(horizontalLayout);
+
 		layout.setMargin(true);
-		Button addtreatment = new Button("Ajouter un autre élement", FontAwesome.PLUS_SQUARE);
 
 		addtreatment.addClickListener(new ClickListener() {
 
@@ -100,11 +111,13 @@ public class Prescription extends FormLayout implements View {
 				// medicamentsList.getValue()).getLabel();
 				String d = description.getValue();
 				verticalLayout.addComponent(prepareOneRow((Medicament) medicamentsList.getValue(), d));
+				clear();
 
 			}
 		});
-		layout.addComponent(addtreatment);
+
 		layout.addComponent(verticalLayout);
+		layout.addComponent(richTextArea);
 		return layout;
 	}
 
@@ -122,7 +135,9 @@ public class Prescription extends FormLayout implements View {
 				// new Date(), client, user);
 				String name = CurrentUser.get();
 				User user = daoService.getByProperty(User.class, "username", name).get(0);
-				prescriptionService.addPrescription(treatments, new Date(), client, user);
+				prescription = prescriptionService.addPrescription(treatments, new Date(), richTextArea.getValue(),
+						client, user);
+				popupWindow();
 			}
 		};
 		return clickListener;
@@ -140,6 +155,7 @@ public class Prescription extends FormLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				verticalLayout.addComponent(prepareOneRow(medicament.getLabel(), description));
+				clear();
 
 			}
 		};
@@ -184,4 +200,31 @@ public class Prescription extends FormLayout implements View {
 		return clickListener;
 	}
 
+	public void popupWindow() {
+		final Window window = new Window("Window");
+		window.setWidth(300.0f, Unit.PIXELS);
+		final FormLayout content = new FormLayout();
+		content.addComponent(new Label(prescription.getClient().getName()));
+		content.addComponent(new Label(prescription.getUser().getUsername()));
+		window.setContent(content);
+		window.setModal(true);
+		window.center();
+
+		UI.getCurrent().addWindow(window);
+	}
+
+	public void clear() {
+		System.out.println("enter clear");
+		this.description.clear();
+		this.medicamentsList.clear();
+		System.out.println("exit clear");
+	}
+
+	public com.bourgadix.dao.Prescription getPrescription() {
+		return prescription;
+	}
+
+	public void setPrescription(com.bourgadix.dao.Prescription prescription) {
+		this.prescription = prescription;
+	}
 }

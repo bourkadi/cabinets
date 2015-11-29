@@ -36,6 +36,7 @@ public class Prescription implements java.io.Serializable {
 	private Integer idprescription;
 	// private Visit visit;
 	private Integer createdate;
+	private String note;
 	private User user;
 	private Client client;
 	// private Set<Medicament> medicaments=new HashSet<Medicament>(0);
@@ -132,6 +133,15 @@ public class Prescription implements java.io.Serializable {
 	@Column(name = "createdate", length=11)
 	public Integer getCreatedate() {
 		return createdate;
+	}
+
+	@Column(name = "note",length = 65535)
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }
