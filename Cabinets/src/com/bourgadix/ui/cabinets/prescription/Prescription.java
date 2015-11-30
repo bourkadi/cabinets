@@ -201,16 +201,9 @@ public class Prescription extends FormLayout implements View {
 	}
 
 	public void popupWindow() {
-		final Window window = new Window("Window");
-		window.setWidth(300.0f, Unit.PIXELS);
-		final FormLayout content = new FormLayout();
-		content.addComponent(new Label(prescription.getClient().getName()));
-		content.addComponent(new Label(prescription.getUser().getUsername()));
-		window.setContent(content);
-		window.setModal(true);
-		window.center();
-
-		UI.getCurrent().addWindow(window);
+		PrescriptionPrinter printer = new PrescriptionPrinter();
+	//	printer.present(prescription);
+		printer.print();
 	}
 
 	public void clear() {
