@@ -6,9 +6,7 @@ import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Medicament;
-import com.vaadin.client.ui.FontIcon;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Grid;
 
 public class ClientGrid extends Grid {

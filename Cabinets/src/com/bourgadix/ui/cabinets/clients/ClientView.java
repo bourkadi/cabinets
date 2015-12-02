@@ -90,6 +90,11 @@ public class ClientView extends FormLayout implements View {
 		button.setIcon(FontAwesome.CLOCK_O);
 		button.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2881257322789831172L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -111,6 +116,11 @@ public class ClientView extends FormLayout implements View {
 		editButton.setIcon(FontAwesome.EDIT);
 		editButton.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 490176791666351417L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -124,6 +134,11 @@ public class ClientView extends FormLayout implements View {
 		addPrescription.addStyleName(ValoTheme.BUTTON_QUIET);
 		addPrescription.setIcon(FontAwesome.MEDKIT);
 		addPrescription.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1919403435270926874L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -150,10 +165,13 @@ public class ClientView extends FormLayout implements View {
 		CssLayout layout1 = calendarOfClient(client.getIdclient());
 		CssLayout cssLayout=new CssLayout();
 		CssLayout cssLayout1=new CssLayout();
+		
+		PrescriptionPresenter prescriptionPresenter=new  PrescriptionPresenter(client.getIdclient());
+		System.out.println("This is the fucking value:"+client.getIdclient());
 		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
 		sheet.addTab(layout1, "Calendrier", FontAwesome.CALENDAR);
 		sheet.addTab(layout2, "Historique des visites", FontAwesome.HISTORY);
-		sheet.addTab(cssLayout, "Ordannances", FontAwesome.FILE_TEXT);
+		sheet.addTab(prescriptionPresenter, "Ordannances", FontAwesome.FILE_TEXT);
 		sheet.addTab(cssLayout1, "Examens", FontAwesome.STETHOSCOPE);
 
 
@@ -225,6 +243,11 @@ public class ClientView extends FormLayout implements View {
 
 		monthlyView.addStyleName(ValoTheme.LAYOUT_CARD);
 		monthlyView.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2840667487160187080L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {

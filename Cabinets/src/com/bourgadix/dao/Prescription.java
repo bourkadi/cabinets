@@ -101,7 +101,7 @@ public class Prescription implements java.io.Serializable {
 		this.treatments = treatments;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user")
 	public User getUser() {
 		return user;
@@ -111,7 +111,7 @@ public class Prescription implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "client")
 	public Client getClient() {
 		return client;
