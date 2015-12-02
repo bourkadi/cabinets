@@ -202,8 +202,8 @@ public class Prescription extends FormLayout implements View {
 
 	public void popupWindow() {
 		PrescriptionPrinter printer = new PrescriptionPrinter();
-	//	printer.present(prescription);
-		printer.print();
+		printer.present(prescription);
+		
 	}
 
 	public void clear() {

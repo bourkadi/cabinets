@@ -148,9 +148,15 @@ public class ClientView extends FormLayout implements View {
 		CssLayout layout = info();
 		sheet.addTab(layout, "Info", FontAwesome.INFO);
 		CssLayout layout1 = calendarOfClient(client.getIdclient());
+		CssLayout cssLayout=new CssLayout();
+		CssLayout cssLayout1=new CssLayout();
 		VerticalLayout layout2 = this.visitHistory(client.getIdclient());
 		sheet.addTab(layout1, "Calendrier", FontAwesome.CALENDAR);
 		sheet.addTab(layout2, "Historique des visites", FontAwesome.HISTORY);
+		sheet.addTab(cssLayout, "Ordannances", FontAwesome.FILE_TEXT);
+		sheet.addTab(cssLayout1, "Examens", FontAwesome.STETHOSCOPE);
+
+
 		addComponent(horizentalActionMenu());
 		addComponent(sheet);
 
