@@ -51,6 +51,11 @@ public class ClientList extends CssLayout implements View {
 		filter.addShortcutListener(new ShortcutListener("", KeyCode.ENTER,
 				new int[] {}) {
 
+			/**
+					 * 
+					 */
+					private static final long serialVersionUID = 6303106721111844488L;
+
 			@Override
 			public void handleAction(Object sender, Object target) {
 				// TODO Auto-generated method stub

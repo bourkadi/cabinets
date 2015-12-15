@@ -15,6 +15,7 @@ import com.bourgadix.services.PrescriptionManagement;
 import com.bourgadix.services.PrescriptionService;
 import com.bourgadix.ui.cabinets.authentification.CurrentUser;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -27,9 +28,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -53,6 +52,7 @@ public class Prescription extends FormLayout implements View {
 	private RichTextArea richTextArea = new RichTextArea("Notes");
 	private com.bourgadix.dao.Prescription prescription = null;
 
+	private Navigator navigator;
 	public Prescription() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -103,6 +103,11 @@ public class Prescription extends FormLayout implements View {
 
 		addtreatment.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8071012164171955005L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -137,7 +142,12 @@ public class Prescription extends FormLayout implements View {
 				User user = daoService.getByProperty(User.class, "username", name).get(0);
 				prescription = prescriptionService.addPrescription(treatments, new Date(), richTextArea.getValue(),
 						client, user);
-				popupWindow();
+				//PrescriptionPrinter printer = new PrescriptionPrinter();
+			//	printer.present(prescription);
+
+				Navigator navigator = getUI().getNavigator();
+				navigator.addView(PrescriptionPrinter.URL, PrescriptionPrinter.class);
+				navigator.navigateTo(PrescriptionPrinter.URL+"/id/"+prescription.getIdprescription());
 			}
 		};
 		return clickListener;
@@ -186,6 +196,11 @@ public class Prescription extends FormLayout implements View {
 	public ClickListener removeRow(final HorizontalLayout horizontalLayout, final Treatment treatment) {
 		ClickListener clickListener = new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -457330373271272789L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -200,11 +215,7 @@ public class Prescription extends FormLayout implements View {
 		return clickListener;
 	}
 
-	public void popupWindow() {
-		PrescriptionPrinter printer = new PrescriptionPrinter();
-		printer.present(prescription);
-		
-	}
+
 
 	public void clear() {
 		System.out.println("enter clear");

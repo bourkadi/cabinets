@@ -90,7 +90,7 @@ public class Prescription implements java.io.Serializable {
 	// this.medicaments = medicaments;
 	// }
 
-	@OneToMany(fetch = FetchType.LAZY, targetEntity = Treatment.class, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Treatment.class, cascade = CascadeType.ALL)
 	@JoinTable(name = "treatment_perscription", joinColumns = {
 			@JoinColumn(name = "idprescription") }, inverseJoinColumns = { @JoinColumn(name = "idtreatment") })
 	public Set<Treatment> getTreatments() {

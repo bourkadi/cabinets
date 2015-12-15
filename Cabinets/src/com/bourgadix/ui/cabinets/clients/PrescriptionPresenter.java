@@ -3,7 +3,6 @@ package com.bourgadix.ui.cabinets.clients;
 import java.util.Collection;
 import java.util.List;
 
-import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Prescription;
@@ -37,15 +36,12 @@ public class PrescriptionPresenter extends CssLayout {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void toGrid(){
+	public void toGrid() {
 		Collection<Prescription> list = daoService.getByProperty(Prescription.class, "client.idclient", client);
 		BeanItemContainer<Prescription> container = new BeanItemContainer<Prescription>(Prescription.class, list);
 		container.addNestedContainerProperty("client.name");
 		container.addNestedContainerProperty("client.lastname");
-		System.out.println("Inside the presenter, idc is== "+client);
-		// addColumn("idclient", Integer.class)
-		// .setRenderer(new NumberRenderer("%02d")).setHeaderCaption("##")
-		// .setExpandRatio(0);
+		System.out.println("Inside the presenter, idc is== " + client);
 		Grid grid = new Grid();
 		grid.addColumn("client.name", String.class).setExpandRatio(2);
 		grid.addColumn("client.lastname", String.class).setExpandRatio(2);
@@ -53,8 +49,9 @@ public class PrescriptionPresenter extends CssLayout {
 
 		grid.setContainerDataSource(container);
 		addComponent(grid);
-		
+
 	}
+
 	public int getClient() {
 		return client;
 	}

@@ -163,7 +163,6 @@ public class ClientView extends FormLayout implements View {
 		CssLayout layout = info();
 		sheet.addTab(layout, "Info", FontAwesome.INFO);
 		CssLayout layout1 = calendarOfClient(client.getIdclient());
-		CssLayout cssLayout=new CssLayout();
 		CssLayout cssLayout1=new CssLayout();
 		
 		PrescriptionPresenter prescriptionPresenter=new  PrescriptionPresenter(client.getIdclient());

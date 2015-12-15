@@ -1,21 +1,17 @@
 package com.bourgadix.services;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
-import com.bourgadix.dao.Medicament;
 import com.bourgadix.dao.Prescription;
 import com.bourgadix.dao.Treatment;
 import com.bourgadix.dao.User;
 
 public class PrescriptionManagement implements PrescriptionService {
 	
-	private static final long serialVersionUID = -6274336954264799411L;
-
 	private DaoService dao = new Dao();
 
 	@Override
