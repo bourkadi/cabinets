@@ -33,7 +33,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-public class Prescription extends FormLayout implements View {
+public class AddPrescription extends FormLayout implements View {
 	/**
 	 * 
 	 */
@@ -53,7 +53,7 @@ public class Prescription extends FormLayout implements View {
 	private com.bourgadix.dao.Prescription prescription = null;
 
 	private Navigator navigator;
-	public Prescription() {
+	public AddPrescription() {
 		super();
 		// TODO Auto-generated constructor stub
 		addComponent(prepareTreatmentForm());
@@ -146,8 +146,8 @@ public class Prescription extends FormLayout implements View {
 			//	printer.present(prescription);
 
 				Navigator navigator = getUI().getNavigator();
-				navigator.addView(PrescriptionPrinter.URL, PrescriptionPrinter.class);
-				navigator.navigateTo(PrescriptionPrinter.URL+"/id/"+prescription.getIdprescription());
+				navigator.addView(PrescriptionView.URL, PrescriptionView.class);
+				navigator.navigateTo(PrescriptionView.URL+"/id/"+prescription.getIdprescription());
 			}
 		};
 		return clickListener;

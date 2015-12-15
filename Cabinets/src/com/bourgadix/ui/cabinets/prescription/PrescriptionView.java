@@ -19,7 +19,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-public class PrescriptionPrinter extends CssLayout implements View {
+public class PrescriptionView extends CssLayout implements View {
 	/**
 	 * 
 	 */
@@ -62,7 +62,7 @@ public class PrescriptionPrinter extends CssLayout implements View {
 		UI.getCurrent().addWindow(window);
 	}
 
-	public PrescriptionPrinter() {
+	public PrescriptionView() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -12,7 +12,7 @@ import com.bourgadix.dao.Client;
 import com.bourgadix.dao.Country;
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
-import com.bourgadix.ui.cabinets.prescription.Prescription;
+import com.bourgadix.ui.cabinets.prescription.AddPrescription;
 import com.bourgadix.dao.Visit;
 import com.bourgadix.services.VisitManagement;
 import com.bourgadix.services.VisitsService;
@@ -144,8 +144,8 @@ public class ClientView extends FormLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				Navigator navigator = getUI().getNavigator();
-				navigator.addView(Prescription.URL, Prescription.class);
-				navigator.navigateTo(Prescription.URL + "/" + client.getIdclient());
+				navigator.addView(AddPrescription.URL, AddPrescription.class);
+				navigator.navigateTo(AddPrescription.URL + "/" + client.getIdclient());
 			}
 		});
 		horizontalLayout.addComponent(button);
