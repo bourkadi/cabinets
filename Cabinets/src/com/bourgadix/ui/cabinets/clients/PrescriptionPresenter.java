@@ -1,8 +1,9 @@
 package com.bourgadix.ui.cabinets.clients;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
 import com.bourgadix.dao.Prescription;
@@ -10,6 +11,10 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.VerticalLayout;
 
 public class PrescriptionPresenter extends CssLayout {
 
@@ -28,12 +33,33 @@ public class PrescriptionPresenter extends CssLayout {
 	public PrescriptionPresenter(int client) {
 		super();
 		this.client = client;
-		toGrid();
+		toList();
 	}
 
 	public PrescriptionPresenter(Component... children) {
 		super(children);
 		// TODO Auto-generated constructor stub
+	}
+
+	public void toList() {
+		List<Prescription> list = daoService.getPrescriptionsByClient( client) ;
+		Notification.show("la taille est"+list.size());
+		System.out.println("la taille est"+list.size());
+		for (Prescription prescription : list) {
+			addComponent(listLine(prescription.getClient().getName(), prescription.getClient().getLastname(),
+					prescription.getCreatedate()));
+		}
+	}
+
+	public VerticalLayout listLine(String name, String lastname, int dateunix) {
+		VerticalLayout horizontalLayout = new VerticalLayout();
+		Date date = new Date((long)dateunix*1000);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
+		String dt=sdf.format(date);
+		Label content = new Label("\n"+name + " " + lastname + " :" + dt+"\n");
+		//content.setContentMode(ContentMode.HTML);
+		horizontalLayout.addComponent(content);
+		return horizontalLayout;
 	}
 
 	public void toGrid() {

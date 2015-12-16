@@ -2,6 +2,7 @@ package com.bourgadix.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -143,9 +144,9 @@ public class Dao implements DaoService, Serializable {
 
 	public static void main(String[] args) {
 		Dao dao = new Dao();
-		List<Visit> list = dao.getVisitsOfClient(2, 1438100000, 0);
-		for (Visit visit : list) {
-			System.out.println(visit.getIdvisit());
+		List<Prescription> list = dao.getPrescriptionsByClient(5);
+		for (Prescription visit : list) {
+			System.out.println(visit.getIdprescription());
 		}
 	}
 
@@ -206,6 +207,7 @@ public class Dao implements DaoService, Serializable {
 		}
 		return list;
 	}
+
 	@Override
 	public List<Country> getCountriesList() {
 		// TODO Auto-generated method stub
@@ -225,4 +227,25 @@ public class Dao implements DaoService, Serializable {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Prescription> getPrescriptionsByClient(int client) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		List<Prescription> list = null;
+		try {
+			final Criteria crit = session.createCriteria(Prescription.class);
+
+			// crit.addOrder(Order.asc("idcountry"));
+			crit.add(Restrictions.eq("client.idclient", client));
+			list = crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		} catch (RuntimeException e1) {
+			e1.printStackTrace();
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return list;
+	}
+	
 }

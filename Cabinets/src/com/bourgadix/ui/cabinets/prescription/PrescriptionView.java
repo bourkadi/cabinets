@@ -28,39 +28,6 @@ public class PrescriptionView extends CssLayout implements View {
 	public static final String NAME = "Ordonnance";
 
 	private Integer i;
-	private final Button print = new Button("Print");
-	private DaoService daoService = new Dao();
-
-	public void present(Prescription prescription) {
-		final Window window = new Window("Window");
-		window.setWidth(300.0f, Unit.PIXELS);
-		final FormLayout content = new FormLayout();
-		content.addComponent(new Label(prescription.getClient().getName()));
-		content.addComponent(new Label(prescription.getUser().getUsername()));
-		for (Treatment treatment : prescription.getTreatments()) {
-			content.addComponent(new Label(treatment.getMedicament().getLabel() + " :" + treatment.getDescription()));
-		}
-		content.addComponent(new Label(prescription.getNote()));
-		content.addComponent(new Label(prescription.getPrescriptiondate().toString()));
-		print.addClickListener(new ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 7225712980929086903L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		content.addComponent(print);
-		window.setContent(content);
-		window.setModal(true);
-		window.center();
-		UI.getCurrent().addWindow(window);
-	}
 
 	public PrescriptionView() {
 		super();
@@ -74,8 +41,11 @@ public class PrescriptionView extends CssLayout implements View {
 		String fragment = Page.getCurrent().getUriFragment();
 		String v = fragment.split("/")[2];
 		setI(Integer.parseInt(v));
-		Prescription prescription=daoService.get(Prescription.class, i);
-		present(prescription);
+		DaoService daoService = new Dao();
+		Prescription prescription = daoService.get(Prescription.class, i);
+		PrescriptionPresenter prescriptionPresenter = new PrescriptionPresenter(prescription);
+		addComponent(prescriptionPresenter);
+
 	}
 
 	public Integer getI() {

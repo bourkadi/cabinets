@@ -13,6 +13,8 @@ public interface DaoService {
 
 	public <T> List<T> getByProperty(final Class<T> type, String propertyName,
 			Object value);
+	
+
 
 	public List<Visit> getVisits(Integer ud, Integer a);
 
@@ -22,5 +24,7 @@ public interface DaoService {
 	
 	public List<Sexe> getSexeList();
 	public List<Country> getCountriesList();
+	
+	public List<Prescription> getPrescriptionsByClient(int client);
 
 }
