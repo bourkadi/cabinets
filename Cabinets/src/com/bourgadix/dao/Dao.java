@@ -238,6 +238,7 @@ public class Dao implements DaoService, Serializable {
 
 			// crit.addOrder(Order.asc("idcountry"));
 			crit.add(Restrictions.eq("client.idclient", client));
+			crit.addOrder(Order.desc("idprescription"));
 			list = crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		} catch (RuntimeException e1) {
 			e1.printStackTrace();

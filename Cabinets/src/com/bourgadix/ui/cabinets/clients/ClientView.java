@@ -35,6 +35,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -64,6 +65,8 @@ public class ClientView extends FormLayout implements View {
 		String fragment = CabinetsUI.getCurrent().getPage().getUriFragment();
 		String v = fragment.split("/")[1];
 		System.out.println("This is v=>" + v);
+		String caption= com.vaadin.shared.Version.getFullVersion();
+		Notification.show(caption);
 
 	}
 
