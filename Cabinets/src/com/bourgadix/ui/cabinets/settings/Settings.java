@@ -3,10 +3,19 @@ package com.bourgadix.ui.cabinets.settings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Date;
+
+import org.joda.time.LocalDate;
 
 import com.bourgadix.dao.Dao;
 import com.bourgadix.dao.DaoService;
+import com.bourgadix.dao.User;
 import com.bourgadix.dao.Variable;
+import com.bourgadix.services.SettingsManagement;
+import com.bourgadix.services.SettingsService;
+import com.bourgadix.ui.cabinets.authentification.CurrentUser;
+import com.bourgadix.ui.cabinets.prescription.PrescriptionView;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -27,6 +36,8 @@ import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class Settings extends CssLayout implements View {
@@ -53,8 +64,7 @@ public class Settings extends CssLayout implements View {
 		layout.addComponent(users);
 		final Embedded image = new Embedded();
 
-		
-		image.setSource( new ThemeResource("img/logo.png"));
+		image.setSource(new ThemeResource("img/logo.png"));
 		image.setHeight("100px");
 		image.setWidth("120px");
 
@@ -75,6 +85,15 @@ public class Settings extends CssLayout implements View {
 		formLayout.addComponent(image);
 		formLayout.addComponent(startingHoursSelect());
 		formLayout.addComponent(endingHoursSelect());
+		formLayout.addComponent(startingDayOfWeek());
+		formLayout.addComponent(endingDayOfWeek());
+		Button saveSettings = new Button("Enregistrer les modifications");
+		saveSettings.addClickListener(
+				saveSettings(cabinetName.getValue(), Integer.parseInt(startingHoursSelect().getValue().toString()),
+						Integer.parseInt(endingHoursSelect().getValue().toString()),
+						Integer.parseInt(startingDayOfWeek().getValue().toString()),
+						Integer.parseInt(endingDayOfWeek().getValue().toString())));
+		formLayout.addComponent(saveSettings);
 		layout.addComponent(formLayout);
 
 		return layout;
@@ -93,9 +112,11 @@ public class Settings extends CssLayout implements View {
 		}
 		sample.setNullSelectionAllowed(false);
 		sample.setValue(Integer.parseInt(dao.get(Variable.class, 2).getValue()));
+		Notification.show("Data:=>"+sample.getValue().toString());
 		sample.setImmediate(true);
 		return sample;
 	}
+
 	public NativeSelect endingHoursSelect() {
 		NativeSelect sample = new NativeSelect("Veuillez choisir l'heure de fermeture");
 		for (int i = 0; i < 10; i++) {
@@ -110,6 +131,64 @@ public class Settings extends CssLayout implements View {
 		sample.setValue(Integer.parseInt(dao.get(Variable.class, 3).getValue()));
 		sample.setImmediate(true);
 		return sample;
+	}
+
+	public NativeSelect startingDayOfWeek() {
+		NativeSelect sample = new NativeSelect("Veuillez choisir le premier jour de la semaine");
+		for (int i = 1; i < 8; i++) {
+			sample.addItem(i);
+		}
+		sample.setItemCaption(1, "Lundi");
+		sample.setItemCaption(2, "Mardi");
+		sample.setItemCaption(3, "Mercredi");
+		sample.setItemCaption(4, "Jeudi");
+		sample.setItemCaption(5, "Vendredi");
+		sample.setItemCaption(6, "Samedi");
+		sample.setItemCaption(7, "Dimanche");
+		sample.setValue(Integer.parseInt(dao.get(Variable.class, 4).getValue()));
+
+		return sample;
+	}
+
+	public NativeSelect endingDayOfWeek() {
+		NativeSelect sample = new NativeSelect("Veuillez choisir le dernier jour de la semaine");
+		for (int i = 1; i < 8; i++) {
+			sample.addItem(i);
+		}
+		sample.setItemCaption(1, "Lundi");
+		sample.setItemCaption(2, "Mardi");
+		sample.setItemCaption(3, "Mercredi");
+		sample.setItemCaption(4, "Jeudi");
+		sample.setItemCaption(5, "Vendredi");
+		sample.setItemCaption(6, "Samedi");
+		sample.setItemCaption(7, "Dimanche");
+		sample.setValue(Integer.parseInt(dao.get(Variable.class, 5).getValue()));
+
+		return sample;
+	}
+
+	public ClickListener saveSettings(final String name, final int startingHour, final int endingHour,
+			final int firstDay, final int lastDay) {
+		ClickListener clickListener = new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 9127691339011140817L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				SettingsService settingsService = new SettingsManagement();
+				settingsService.updateSettings(name, startingHour, endingHour, firstDay, lastDay);
+			}
+		};
+		return clickListener;
+	}
+
+	public static void main(String[] args) {
+		LocalDate newDate = new LocalDate();
+		System.out.println(newDate.withDayOfWeek(3).toString());
 	}
 	/*
 	 * public void uploader() { // Show uploaded file in this placeholder final
