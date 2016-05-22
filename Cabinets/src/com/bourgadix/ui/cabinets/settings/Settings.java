@@ -87,12 +87,12 @@ public class Settings extends CssLayout implements View {
 		formLayout.addComponent(endingHoursSelect());
 		formLayout.addComponent(startingDayOfWeek());
 		formLayout.addComponent(endingDayOfWeek());
-		Button saveSettings = new Button("Enregistrer les modifications");
-		saveSettings.addClickListener(
+		Button saveSettings = new Button("Enregistrer les changements");
+		/*saveSettings.addClickListener(
 				saveSettings(cabinetName.getValue(), Integer.parseInt(startingHoursSelect().getValue().toString()),
 						Integer.parseInt(endingHoursSelect().getValue().toString()),
 						Integer.parseInt(startingDayOfWeek().getValue().toString()),
-						Integer.parseInt(endingDayOfWeek().getValue().toString())));
+						Integer.parseInt(endingDayOfWeek().getValue().toString())));*/
 		formLayout.addComponent(saveSettings);
 		layout.addComponent(formLayout);
 
